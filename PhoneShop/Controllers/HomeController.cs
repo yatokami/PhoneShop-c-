@@ -34,7 +34,6 @@ namespace PhoneShop.Controllers
         }
         
         //单件商品展示
-        //单件展示
         public ActionResult Show(int? GoodsID)
         {
             GoodsBusinessLayer gbl = new GoodsBusinessLayer();
