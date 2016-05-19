@@ -28,9 +28,15 @@
         <div style="float: right;height: 35px;width:330px;">
             总计：<p id="money" style="color: red;font-size: 25px"></p>
         </div>
+        <input type="button" value="" onclick="WellBad(1)"/>
+        <input type="button" value="" onclick="WellBad(-1)" />
         <input type="button" class="btn btn-success"value="加入购物车" onclick="AddCart()">
     </div>
 <script>
+
+
+
+
     $(function () {
         // 商品+-
         $('.li-quantity a').click(function () {
