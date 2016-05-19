@@ -141,6 +141,35 @@ namespace DataAccessLayer
                 return null;
             }
         }
+
+        //点击赞踩
+        public T_WellBad WellBad(int Index, int GoodsID)
+        {
+            int count = 0;
+            if (Index == 1)
+            {
+                 count = SqlHelper.ExecuteNonQuery("update T_WellBad set Wells += 1 where GoodsID = @GoodsID",new SqlParameter("@GoodsID", GoodsID));
+            }
+            else if(Index == -1)
+            {
+                count = SqlHelper.ExecuteNonQuery("update T_WellBad set Bads += 1 where GoodsID = @GoodsID", new SqlParameter("@GoodsID", GoodsID));
+            }
+
+            DataTable dt = SqlHelper.ExecuteDataTable("select * from T_WellBad where GoodsID = @GoodsID", new SqlParameter("@GoodsID", GoodsID));
+
+            IList<T_WellBad> wbs = ModelConvertHelper<T_WellBad>.ConvertToModel(dt);
+
+            return (T_WellBad)wbs[0];
+        }
+
+
+        //public void Gets()
+        //{
+        //    for(int i = 2; i < 83; i++)
+        //    {
+        //        SqlHelper.ExecuteNonQuery("insert into T_WellBad(GoodsID, Wells, Bads)Values(@GoodsID, 0, 0)", new SqlParameter("@GoodsID", i));
+        //    }
+        //}
       
     }
 }

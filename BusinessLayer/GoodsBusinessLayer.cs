@@ -169,5 +169,25 @@ namespace ViewModels
             return wbv;
         }
         #endregion
+
+        #region 点赞踩
+        public WellBadView WellBad(int Index, int GoodsID)
+        {
+            GoodsDataLayer gdl = new GoodsDataLayer();
+            T_WellBad wb = gdl.WellBad(Index, GoodsID);
+            WellBadView wbv = new WellBadView();
+
+            wbv.Bad = Convert.ToString(wb.Bads);
+            wbv.Well = Convert.ToString(wb.Wells);
+
+            return wbv;
+        }
+        #endregion
+
+        //public void Gets()
+        //{
+        //    GoodsDataLayer gdl = new GoodsDataLayer();
+        //    gdl.Gets();
+        //}
     }
 }

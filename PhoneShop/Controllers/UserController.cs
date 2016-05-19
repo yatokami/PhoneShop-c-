@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PhoneShop.Models;
+using System.Web.Script.Serialization;
 
 namespace PhoneShop.Controllers
 {
@@ -150,6 +151,24 @@ namespace PhoneShop.Controllers
                 return Content("<script>alert('删除失败');location.href = '/Home/Cart'</script>");
             }
         }
+
+        //点赞踩
+        [Authorize]
+        public ActionResult WellBad(int Index, int GoodsID)
+        {
+            GoodsBusinessLayer ubl = new GoodsBusinessLayer();
+            WellBadView wbv = ubl.WellBad(Index, GoodsID);
+            string jsonData = new JavaScriptSerializer().Serialize(wbv);
+
+            return Content(jsonData);
+        }
+
+        //public ActionResult Gets()
+        //{
+        //    GoodsBusinessLayer gbl = new GoodsBusinessLayer();
+        //    gbl.Gets();
+        //    return View();
+        //}
 
       
     }

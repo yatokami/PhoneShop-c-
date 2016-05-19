@@ -28,12 +28,44 @@
         <div style="float: right;height: 35px;width:330px;">
             总计：<p id="money" style="color: red;font-size: 25px"></p>
         </div>
-        <input type="button" value="" onclick="WellBad(1)"/>
-        <input type="button" value="" onclick="WellBad(-1)" />
+        <input id="Well" type="button" value="@Model.WellBad.Well" onclick="WellBad(1)"/>
+        <input id="Bad" type="button" value="@Model.WellBad.Bad" onclick="WellBad(-1)" />
         <input type="button" class="btn btn-success"value="加入购物车" onclick="AddCart()">
     </div>
 <script>
 
+    function ChangeWB(index)
+    {
+
+    }
+
+    //异步提交点赞踩
+    function WellBad(index)
+    {
+        var GoodsID = $("#GoodsID").val()
+        var datas = { "GoodsID": GoodsID, "Index": index }
+        $.ajax({
+            url: "/User/WellBad",
+            type: "POST",
+            data: datas,
+            success: function (data) {
+                var result = $.parseJSON(data);
+                if(Index == 1 )
+                {
+                   
+                    ChangeWB(1, result)
+                } else if(Index == -1) {
+                    ChangeWB(-1, result)
+                } else {
+                    return alert("点击失败")
+                }
+
+            },
+            error: function () {
+                alert("点击失败")
+            }
+        })
+    }
 
 
 

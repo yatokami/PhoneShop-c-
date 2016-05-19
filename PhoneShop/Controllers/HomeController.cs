@@ -42,6 +42,7 @@ namespace PhoneShop.Controllers
             {
                 GoodsView lgv = gbl.GetGood(GoodsID);
                 WellBadView wbv = gbl.GetWellBad(GoodsID);
+                ulv.WellBad = wbv;
                 ulv.Goods = lgv;
                 ulv.UserName = User.Identity.Name;
                 return View("Goods", ulv);
