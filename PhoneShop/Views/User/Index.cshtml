@@ -1,0 +1,82 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <style type="text/css">
+        .panel-body {
+            padding: 30px 50px 0 50px;
+        }
+
+        .form-group {
+            margin-bottom: 35px;
+        }
+
+        .panel-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container web-body" >
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="height: 50px;">
+                        <div class="panel-title" style="text-align: left">用户注册</div>
+                    </div>
+                    <div class="panel-body">
+                        <form action="/User/Insert" class="form-horizontal" role="form" method="post">
+                            <div class="form-group">
+                                <label>用户名</label>
+                                <input id="Uname" type="text" class="form-control" name="Uname" placeholder="用户名" required />
+                            </div>
+                            <div class="form-group">
+                                <label>密码</label>
+                                <input id="Upwd" type="password" class="form-control" name="Upwd" placeholder="密码" required />
+                            </div>
+                            <div class="form-group">
+                                <label>性别 </label>
+                                <input id="Usex" type="radio" class="iradio_minimal" name="Sex" value="男" checked />男
+                                <input id="Usex" type="radio" class="iradio_minimal" name="Sex" value="女" />女
+                                <input id="Usex" type="radio" class="iradio_minimal" name="Sex" value="秀吉" />秀吉
+                            </div>
+                            <div class="form-group">
+                                <label>真实姓名</label>
+                                <input  id="RealName" type="text" class="form-control" name="RealName"  required />
+                            </div>
+                            <div class="form-group">
+                                <label>电话</label>
+                                <input id="Tel" type="text" class="form-control" name="Tel" required />
+                            </div>
+                            <div class="form-group">
+                                <label>电子邮件地址</label>
+                                <input id="Email" type="text" class="form-control" name="Email" required />
+                            </div>
+                            <div class="form-group">
+                                <label>送货地址</label><input id="Address" type="text" class="form-control" name="Address" required />
+                            </div>
+                            <div class="form-group">
+                                <label>邮编</label><input id="PostCode" type="text" class="form-control" name="PostCode" required />
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-success btn-block" onclick="register()" value="注 册" />
+                                <a href="/Authentication/Login" class="btn btn-primary" style="float: right;margin-top: 20px;">登 陆</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

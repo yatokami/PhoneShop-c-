@@ -1,0 +1,33 @@
+﻿@using ViewModels
+@model UserListView
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/Home/Index">手机电子商城</a>
+    </div>
+    <div class="navbar-right">
+        <ul class="nav navbar-nav">
+            @if (Model.UserName == "")
+            {
+                <li><a href="@Url.Action("Login", "Auth")">登录</a></li>
+            }
+            else
+            {
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@Model.UserName<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/User/UserShow">账号管理</a></li>
+                        <li><a href="/Authentication/Logout">退出</a></li>
+                    </ul>
+                </li>
+                <li><a href="/Home/Cart">购物车</a></li>
+            }
+            <li><a href="/Home/Index">主页</a></li>
+            <li><a href="#contact">联系客服</a></li>
+        </ul>
+    </div>
+ </nav>
+
+
+  
+

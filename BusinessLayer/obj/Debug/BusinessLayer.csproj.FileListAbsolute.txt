@@ -1,0 +1,11 @@
+G:\Study\ASP.net_work\PhoneShop\BusinessLayer\bin\Debug\BusinessLayer.dll
+G:\Study\ASP.net_work\PhoneShop\BusinessLayer\bin\Debug\BusinessLayer.pdb
+G:\Study\ASP.net_work\PhoneShop\BusinessLayer\bin\Debug\BusinessEntities.dll
+G:\Study\ASP.net_work\PhoneShop\BusinessLayer\bin\Debug\DataAccessLayer.dll
+G:\Study\ASP.net_work\PhoneShop\BusinessLayer\bin\Debug\BusinessEntities.pdb
+G:\Study\ASP.net_work\PhoneShop\BusinessLayer\bin\Debug\DataAccessLayer.pdb
+G:\Study\ASP.net_work\PhoneShop\BusinessLayer\obj\Debug\BusinessLayer.csprojResolveAssemblyReference.cache
+G:\Study\ASP.net_work\PhoneShop\BusinessLayer\obj\Debug\BusinessLayer.dll
+G:\Study\ASP.net_work\PhoneShop\BusinessLayer\obj\Debug\BusinessLayer.pdb
+G:\Study\ASP.net_work\PhoneShop\BusinessLayer\bin\Debug\ViewModel.dll
+G:\Study\ASP.net_work\PhoneShop\BusinessLayer\bin\Debug\ViewModel.pdb

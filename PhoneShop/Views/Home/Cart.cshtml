@@ -1,0 +1,240 @@
+﻿@using ViewModels
+@model UserListView
+@{
+    Layout = "~/Views/Shared/User_Layout.cshtml";
+    int i = 0;
+}
+
+
+
+@section ContentBody{
+<div style="margin:50px auto;width: 1024px;">
+    <div>
+        <div>
+            <div style="float:right;">
+                <a class="btn  btn-xs btn-success" href="Index" style="margin-right: 35px;">商品页</a>
+            </div>
+            <h2>购物车</h2>
+            <hr>
+        </div>
+        <div>
+            <div class="cart-heading">
+                <div style="padding: 10px 0 0 10px">
+                    <span style="margin-right: 120px;">
+                        <input id="CheckAll" type="checkbox"> 全选
+                    </span>
+                    <span style="margin-right: 150px;">商品</span>
+                    <span style="margin-right: 150px;">价格</span>
+                    <span style="margin-right: 100px;">数量</span>
+                    <span style="margin-right: 120px;">操作</span>
+                    <span style="padding-right: 0px;">加入购物车日期</span>
+                </div>
+            </div>
+            <div class="cart-body">
+                <ul>
+                    @foreach (var Data in Model.CartViews.GetPagingData()) { 
+                    <li>
+                        <div class="li-checkbox">
+                            <input data-id="@Data.GoodsID" data-index="@(++i)" data-price="@Data.Price" data-buyid="@Data.BuyID" name="chkItem" class="li-checkbox input" type="checkbox" />
+                        </div>
+                        <div class="li-img">
+                            <a>
+                                <img class="li-img a img" src="~/Public/images/@Data.TypeID/@Data.GoodsPicture">
+                            </a>
+                        </div>
+                        <div class="li-content">
+                            <a>@Data.GoodsName</a>
+                        </div>
+                        <div class="li-price">
+                            <span>@Data.Price</span>
+                        </div>
+                        <div class="li-quantity">
+                            <a data-type="add" href="javascript:void(0);" class="btn btn-default btn-xs ">+</a>
+                            <input id="@("Q"+i.ToString())" style="width: 40px;" type="text" value="@Data.Num">
+                            <a data-type='subtr' href="javascript:void(0);" class="btn btn-default btn-xs">-</a>
+                        </div>
+                        <div class="li-del">
+                            <a href="@Url.Action("DeleteCart", "User", new { BuyID = Data.BuyID })" class="btn btn-primary btn-xs">删除</a>
+                        </div>
+                        <div class="li-date">
+                            <span>@Data.BuyDate</span>
+                        </div>
+                    </li>
+                    }
+                </ul>
+            </div>
+            <div style="float: right;height: 35px;width:330px;">
+                总计：<span id="money" style="color: red;font-size: 25px">￥0.00</span>
+                <input type="button" style="width: 130px;float:right;" class="btn btn-success" onclick="Clearing();" value="结 算" />
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    @if (Model.CartViews.HasPrev)
+    {
+        <a href="@Url.Action("Cart", "Home", new { pageIndex = Model.CartViews.PageIndex - 1})">上一页</a>
+    }
+    else
+    {
+        <em style="color:Gray">上一页</em>
+    }
+    @if (Model.CartViews.HasNext)
+    {
+        <a href="@Url.Action("Cart", "Home", new { pageIndex = Model.CartViews.PageIndex + 1})">下一页</a>
+    }
+    else
+    {
+        <em style="color:Gray">下一页</em>
+    }
+</p>
+}
+
+@section ContentScript{
+ <script src="~/Scripts/jquery.json.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // 商品+-
+        $('.li-quantity a').click(function () {
+            var self = $(this)
+            var type = self.attr('data-type'),
+                num = parseFloat(self.siblings('input').val());
+            if (type == 'add') {
+                num += 1;
+            } else if (type == 'subtr') {
+                if (num > 1) {
+                    num -= 1;
+                } else {
+                    return false;
+                }
+            }
+            self.siblings('input').val(num)
+            tamount()
+        });
+
+        //checkbox 单选事件
+        $('input[name="chkItem"]:checkbox').click(function () {
+            var isCheck = $('input[name="chkItem"]:not(:checked)').length ? false : true
+            $('#CheckAll').prop("checked", isCheck)
+            tamount()
+        });
+
+        //checkbox 全选事件
+        $('#CheckAll').click(function () {
+            var self = $(this)
+            $('input[name="chkItem"]').each(function () {
+                $(this).prop("checked", self.is(':checked'))
+            })
+            tamount()
+        })
+
+    })
+    var sum = 0;
+    //用户结算
+    function Clearing() {
+        var datas = {}
+        var k = 0
+        var GoodsIDs = "";
+        var Nums = "";
+        var BuyIDs = "";
+        $('input[name="chkItem"]:checked').each(function () {
+            var self = $(this),
+                    index = self.attr('data-index'),
+                    GoodsID = self.attr('data-id'),
+                    BuyID = self.attr('data-buyid')
+            var Num = $('#Q' + index).val()
+            GoodsIDs += GoodsID + ","
+            Nums += Num + ","
+            BuyIDs += BuyID + ","
+        })
+        datas = { "GoodsIDs": GoodsIDs, "Nums": Nums, "BuyIDs": BuyIDs }
+        $.ajax({
+            type: 'post',
+            url: '/User/Clear',
+            data: datas,
+            async: false,
+            success: function (data) {
+                alert(data)
+            },
+            error: function (data, status) {
+                Clearing()
+            }
+        });
+        location.href = "Cart"
+    }
+    //计算商品总价格
+    function tamount() {
+        sum = 0
+        $('input[name="chkItem"]:checked').each(function () {
+            var self = $(this),
+                price = self.attr('data-price'),
+                index = self.attr('data-index')
+            var quantity = $('#Q' + index).val()
+            sum += (parseFloat(price) * parseFloat(quantity))
+        })
+        $("#money").html('￥' + sum + '.00')
+    }
+</script>
+
+}
+
+@section ContentClass{
+    <style type="text/css">
+        .cart-heading {
+            height: 40px;
+            background-color: #EFEDED;
+        }
+
+        .cart-body {
+            background-color: #F7F7F7;
+        }
+
+            .cart-body ul li {
+                list-style-type: none;
+                margin-left: -30px;
+                width: 870px;
+            }
+
+                .cart-body ul li div {
+                    float: left;
+                    height: 80px;
+                }
+
+        .li-checkbox input {
+            margin: 20px 5px 0 0;
+        }
+
+        .li-img a img {
+            width: 40px;
+            height: 50px;
+        }
+
+        .li-content {
+            margin: 20px 0 0 15px;
+            width: 115px;
+        }
+
+        .li-price {
+            margin: 20px 0 0 15px;
+            width: 40px;
+        }
+
+        li .li-quantity {
+            margin: 20px 0 0 111px;
+            width: 130px;
+        }
+
+        .li-del {
+            margin: 20px 0 0 30px;
+            width: 120px;
+        }
+
+        .li-date {
+            margin: 20px 0 0 30px;
+            width: 50px;
+        }
+        .li-img {
+            margin: 0 0 0 75px;
+        }
+    </style>
+}

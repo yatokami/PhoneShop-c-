@@ -1,0 +1,139 @@
+﻿@using ViewModels
+@model UserListView
+
+@{
+    Layout = "~/Views/Shared/User_Layout.cshtml";
+}
+
+@section ContentBody{
+   <div style="margin:50px auto;width: 1024px;">
+    <div>
+        <div>
+            <div style="float:right;">
+                <a class="btn  btn-xs btn-success" href="OrderShow" style="margin-right: 35px;">订单列表</a>
+            </div>
+            <h2>订单详情</h2>
+            <hr>
+        </div>
+        <div>
+            <div class="cart-heading">
+                <div style="padding: 10px 0 0 10px">
+                    <span style="margin-right: 160px;">商品图片</span>
+                    <span style="margin-right: 175px;">商品名</span>
+                    <span style="margin-right: 190px;">购买数量</span>
+                    <span style="padding-right: 0px;">购买总价</span>
+                </div>
+            </div>
+            <div class="cart-body">
+                <ul>
+                    @foreach (var Data in Model.OrderDetailsViews.GetPagingData())
+                    {
+                        <li>
+                            <div class="li-img">
+                                <a href="@Url.Action("Show", "Home", new { GoodsID = Data.GoodsID })">
+                                    <img class="li-img a img" src="~/Public/images/@Data.TypeID/@Data.GoodsPicture">
+                                </a>
+                            </div>
+                            <div class="li-content">
+                                <span>@Data.GoodsName</span>
+                            </div>
+                            <div class="li-quantity">
+                                <span>@Data.Num</span>
+                            </div>
+                            <div class="li-price">
+                                <span>@Data.TotalMoney</span>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+    <p>
+        @if (Model.OrderDetailsViews.HasPrev)
+        {
+            <a href="@Url.Action("Details", "User", new { pageIndex = Model.OrderDetailsViews.PageIndex - 1 })">上一页</a>
+        }
+        else
+        {
+            <em style="color:Gray">上一页</em>
+        }
+        @if (Model.OrderDetailsViews.HasNext)
+        {
+            <a href="@Url.Action("Details", "User", new { pageIndex = Model.OrderDetailsViews.PageIndex + 1 })">下一页</a>
+        }
+        else
+        {
+            <em style="color:Gray">下一页</em>
+        }
+    </p>
+}
+
+@section ContentClass{
+    <style type="text/css">
+    .cart-heading {
+        height: 40px;
+        background-color: #EFEDED;
+    }
+
+    .cart-body {
+        background-color: #F7F7F7;
+    }
+
+        .cart-body ul li {
+            list-style-type: none;
+            margin-left: -30px;
+            width: 870px;
+        }
+
+            .cart-body ul li div {
+                float: left;
+                height: 80px;
+            }
+
+    .li-checkbox input {
+        margin: 20px 5px 0 0;
+    }
+
+    .li-img a img {
+        width: 60px;
+        height: 70px;
+    }
+
+    .li-content {
+        margin: 20px 0 0 15px;
+        width: 115px;
+    }
+
+    .li-price {
+        margin: 20px 0 0 15px;
+        width: 40px;
+    }
+
+    li .li-quantity {
+        margin: 20px 0 0 111px;
+        width: 225px;
+    }
+
+    .li-del {
+        margin: 20px 0 0 30px;
+        width: 120px;
+    }
+
+    .li-date {
+        margin: 20px 0 0 30px;
+        width: 50px;
+    }
+
+    .li-img {
+        margin: 0 0 0 0px;
+        width:210px;
+    }
+</style>
+
+}
+
+@section ContentScript{
+
+}
