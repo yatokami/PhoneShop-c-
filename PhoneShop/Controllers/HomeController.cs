@@ -34,12 +34,13 @@ namespace PhoneShop.Controllers
         }
         
         //单件商品展示
+        //单件展示
         public ActionResult Show(int? GoodsID)
         {
             GoodsBusinessLayer gbl = new GoodsBusinessLayer();
             UserListView ulv = new UserListView();
             GoodsView lgv = gbl.GetGood(GoodsID);
-
+            
             ulv.Goods = lgv;
             ulv.UserName = User.Identity.Name;
             return View("Goods",ulv);
