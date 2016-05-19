@@ -148,5 +148,26 @@ namespace ViewModels
             return status;
         }
         #endregion
+
+        #region 商品赞踩信息
+        public WellBadView GetWellBad(int? GoodsID)
+        {
+            GoodsDataLayer gdl = new GoodsDataLayer();
+            T_WellBad wb = gdl.GetWellBad(GoodsID);
+            WellBadView wbv = new WellBadView();
+            if (wb != null)
+            {
+                wbv.Bad = Convert.ToString(wb.Bads);
+                wbv.Well = Convert.ToString(wb.Wells);
+            }
+            else
+            {
+                wbv.Bad = "0";
+                wbv.Well = "0";
+            }
+
+            return wbv;
+        }
+        #endregion
     }
 }

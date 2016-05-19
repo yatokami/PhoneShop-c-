@@ -124,6 +124,23 @@ namespace DataAccessLayer
 
             return Convert.ToBoolean(count);
         }
+
+        //查看商品赞踩信息
+        public T_WellBad GetWellBad(int? GoodsID)
+        {
+            try
+            {
+                DataTable dt = SqlHelper.ExecuteDataTable("select * from T_WellBad where GoodsID = @GoodsID", new SqlParameter("@GoodsID", GoodsID));
+
+                IList<T_WellBad> wbs = ModelConvertHelper<T_WellBad>.ConvertToModel(dt);
+
+                return (T_WellBad)wbs[0];
+            }
+            catch
+            {
+                return null;
+            }
+        }
       
     }
 }

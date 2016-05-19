@@ -38,11 +38,18 @@ namespace PhoneShop.Controllers
         {
             GoodsBusinessLayer gbl = new GoodsBusinessLayer();
             UserListView ulv = new UserListView();
-            GoodsView lgv = gbl.GetGood(GoodsID);
-
-            ulv.Goods = lgv;
-            ulv.UserName = User.Identity.Name;
-            return View("Goods",ulv);
+            if (GoodsID != null)
+            {
+                GoodsView lgv = gbl.GetGood(GoodsID);
+                WellBadView wbv = gbl.GetWellBad(GoodsID);
+                ulv.Goods = lgv;
+                ulv.UserName = User.Identity.Name;
+                return View("Goods", ulv);
+            }
+            else
+            {
+                return RedirectToAction("../Home/Index");
+            }
         }
 
         //显示购物车

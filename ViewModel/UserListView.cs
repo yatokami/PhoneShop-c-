@@ -11,6 +11,7 @@ namespace ViewModels
     {
         public string UserName { get; set; }
         public GoodsView Goods { get; set; }
+        public WellBadView WellBad { get; set; }
         public List<UserView> Users { get; set; }
         public List<GoodsTypeView> GoodsTypeView { get; set; }
         public List<GoodsView> GoodView { get; set; }

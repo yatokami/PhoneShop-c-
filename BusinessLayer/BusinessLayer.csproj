@@ -54,9 +54,9 @@
       <Project>{bdbc4c36-ea0f-4485-956d-08ea19239307}</Project>
       <Name>DataAccessLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ViewModel\ViewModel.csproj">
+    <ProjectReference Include="..\ViewModel\ViewModels.csproj">
       <Project>{c1da465d-fb45-4a83-a2f1-bb8b21939cb4}</Project>
-      <Name>ViewModel</Name>
+      <Name>ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
