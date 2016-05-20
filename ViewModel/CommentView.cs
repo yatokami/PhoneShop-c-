@@ -10,7 +10,7 @@ namespace ViewModels
     {
         public string CommentContent { get; set; }
         public string Uname { get; set; }
-        public DateTime CommentStartTime { get; set; }
+        public string CommentStartTime { get; set; }
     }
 
     public class CommentViews

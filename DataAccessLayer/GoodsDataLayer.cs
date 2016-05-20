@@ -200,6 +200,44 @@ namespace DataAccessLayer
            
         }
 
+        //提交评论
+        public int Commit(string CommentContent, int GoodsID, string Uname)
+        {
+            try
+            {
+                int count = (int)SqlHelper.ExecuteScalar("select count(*) from T_User_Produce2 where GoodsID = @GoodsID and Uname = @Uname", new SqlParameter("@GoodsID", GoodsID), new SqlParameter("@Uname", Uname));
+
+                if (count == 0)
+                {
+                    Hashtable ht = new Hashtable();
+                    string s1 = "Insert into T_User_Produce2(GoodsID, Uname)Values(@GoodsID, @Uname)";
+                    string s2 = "Insert into T_Comment(CommentContent ,GoodsID, Uname, CommentStarTime)Values(@CommentContent, @GoodsID, @Uname, getdate())";
+                    SqlParameter[] paras1 = new SqlParameter[2];
+                    paras1[0] = new SqlParameter("@GoodsID", GoodsID);
+                    paras1[1] = new SqlParameter("@Uname", Uname);
+                    SqlParameter[] paras2 = new SqlParameter[3];
+                    paras2[0] = new SqlParameter("@CommentContent", CommentContent);
+                    paras2[1] = new SqlParameter("@GoodsID", GoodsID);
+                    paras2[2] = new SqlParameter("@Uname", Uname);
+                    ht.Add(s1, paras1);
+                    ht.Add(s2, paras2);
+
+                    count = SqlHelper.ExecuteSqlTran(ht);
+
+                    return count;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+
 
         //public void Gets()
         //{

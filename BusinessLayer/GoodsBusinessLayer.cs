@@ -197,7 +197,7 @@ namespace ViewModels
                 {
                     CommentView cv = new CommentView();
                     cv.CommentContent = lc[i].CommentContent;
-                    cv.CommentStartTime = lc[i].CommentStarTime;
+                    cv.CommentStartTime = lc[i].CommentStarTime.ToString();
                     cv.Uname = lc[i].Uname;
 
                     lcv.Add(cv);
@@ -210,6 +210,27 @@ namespace ViewModels
                 return null;
             }
         }
+        #endregion
+
+        #region 用户评论
+        public string Commit(string CommentContent, int GoodsID, string Uname)
+        {
+            GoodsDataLayer gdl = new GoodsDataLayer();
+            int count = gdl.Commit(CommentContent, GoodsID, Uname);
+            if (count == 1)
+            {
+                return "用户已评论过";
+            }
+            else if(count == 2)
+            {
+                return "评论成功";
+            }
+            else
+            {
+                return "评论失败";
+            }
+        }
+
         #endregion
 
         //public void Gets()

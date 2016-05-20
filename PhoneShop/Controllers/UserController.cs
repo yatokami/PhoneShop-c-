@@ -164,6 +164,17 @@ namespace PhoneShop.Controllers
             return Content(jsonData);
         }
 
+        [Authorize]
+        //发表评论
+        public ActionResult Commit(string CommentContent, int GoodsID)
+        {
+            string Uname = User.Identity.Name;
+            GoodsBusinessLayer gbl = new GoodsBusinessLayer();
+            string s = gbl.Commit(CommentContent, GoodsID, Uname);
+
+            return Json(s);
+        }
+
         //public ActionResult Gets()
         //{
         //    GoodsBusinessLayer gbl = new GoodsBusinessLayer();

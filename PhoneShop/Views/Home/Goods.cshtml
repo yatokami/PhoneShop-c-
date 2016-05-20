@@ -11,210 +11,242 @@
 
 @section ContentBody{
     <div class="form-group">
-        <input id="GoodsID" type="hidden" value="@Model.Goods.GoodsID" />
-        <p> 商品名称:@Model.Goods.GoodsName</p>
-        <img style="width:300px;height:300px" class="img-rounded" src="@Model.Goods.GoodsPicture" />
-        <div class="li-price">
-            <p>@Model.Goods.Price</p>
-            <input id="price" type="hidden" value="@Model.Goods.Price">
-        </div>
-        <div class="li-quantity">
-            <a data-type="add" href="javascript:void(0);" class="btn btn-default btn-xs ">+</a>
-            <input id="num" style="width: 40px;" type="text" value="1">
-            <a data-type='subtr' href="javascript:void(0);" class="btn btn-default btn-xs">-</a>
-        </div>
-        <div style="float: right;height: 35px;width:330px;">
-            总计：<p id="money" style="color: red;font-size: 25px"></p>
-        </div>
-        <input id="Well" type="button" value="@Model.WellBad.Well" onclick="WellBad(1)"/>
-        <input id="Bad" type="button" value="@Model.WellBad.Bad" onclick="WellBad(-1)" />
-        <input type="button" class="btn btn-success"value="加入购物车" onclick="AddCart()">
+    <input id="GoodsID" type="hidden" value="@Model.Goods.GoodsID" />
+    <h2> 商品名称:@Model.Goods.GoodsName</h2>
+    <img style="width:300px;height:300px" class="img-rounded" src="@Model.Goods.GoodsPicture" />
+    <div class="li-price">
+        <span>单价:</span><span>@Model.Goods.Price</span>
+        <input id="price" type="hidden" value="@Model.Goods.Price">
+    </div>
+    <div class="li-quantity">
+        <a data-type="add" href="javascript:void(0);" class="btn btn-default btn-xs ">+</a>
+        <input id="num" style="width: 40px;" type="text" value="1">
+        <a data-type='subtr' href="javascript:void(0);" class="btn btn-default btn-xs">-</a>
+    </div>
+    </div>
+    <div class="input-group">
+        <input id="Well" class="btn btn-danger" type="button" value="@Model.WellBad.Well" onclick="WellBad(1)" style="margin-right:5px" />
+        <input id="Bad" class="btn btn-info" type="button" value="@Model.WellBad.Bad" onclick="WellBad(-1)" style="margin-right:5px" />
+        <input type="button"  class="btn btn-success" value="加入购物车" onclick="AddCart()">
+    </div>
+    <div class="input-group">
+        总计：<p id="money" style="color: red;font-size: 25px"></p>
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">评论发表</span>
+        <input type="text" id="Comment" name="Comment" class="form-control" placeholder="评论" aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group">
+        <input type="submit" class="btn btn-default" value="发表评论" onclick="Commit()">
     </div>
     <ul class="list-group">
-    @foreach (var Data in Model.CommentViews.GetPagingData())
-    {
-        <li class="list-group-item list-group-item-success">
-            <div class="media">
-                <div class="media-left media-middle">
-                    <a href="#">
-                        <p id="p1">@Data.Uname</p>
-                    </a>
+        @foreach (var Data in Model.CommentViews.GetPagingData())
+        {
+            <li class="list-group-item list-group-item-success">
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <a href="#">
+                            <p id="p1">@Data.Uname</p>
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">@Data.CommentStartTime</h4>
+                        <p id="p2">@Data.CommentContent</p>
+                    </div>
                 </div>
-                <div class="media-body">
-                    <h4 class="media-heading">@Data.CommentStartTime</h4>
-                    <p id="p2">@Data.CommentContent</p>
-                </div>
-            </div>
-        </li>
-    }
+            </li>
+        }
         <li style="list-style-type:none;">
             @if (Model.CommentViews.HasPrev)
             {
-                <button id="b1" class="btn btn-default" onclick="Paging(1)">上一页</button>
+                <button id="b1" class="btn btn-default" onclick="Paging(1,0)">上一页</button>
             }
             else
             {
-                <button id="b1" class="btn btn-default disabled" onclick="Paging(1)">上一页</button>
+                <button id="b1" class="btn btn-default disabled" onclick="Paging(1,0)">上一页</button>
             }
             @if (Model.CommentViews.HasNext)
             {
-               <button id="b2" class="btn btn-default" onclick="Paging(-1)">下一页</button>
+                <button id="b2" class="btn btn-default" onclick="Paging(-1,0)">下一页</button>
             }
             else
             {
-                <button id="b2" class="btn btn-default disabled" onclick="Paging(-1)">>下一页</button>
+                <button id="b2" class="btn btn-default disabled" onclick="Paging(-1,0)">下一页</button>
             }
             <input id="PageIndex" type="hidden" value="@Model.CommentViews.PageIndex" />
             <input id="MaxPageIndex" type="hidden" value="@Model.CommentViews.PageCount" />
         </li>
-</ul>
+    </ul>
 }
 
 
 @section ContentScript{
+    <script>
 
-<script>
-
-    function Media(data)
-    {
-        $("ul .list-group-item").each(function() {
-            $(this).remove();
-        })
-
-        for (var i = data.lcvs.length-1; i >= 0; i--) {
-            $(".list-group").prepend("<li class='list-group-item list-group-item-success'><div class='media'><div class='media-left media-middle'><a href='#'><p id='p1'>"+data.lcvs[i].Uname+"</p></a></div><div class='media-body'><h4 class='mediaheading'>"+data.lcvs[i].CommentStartTime+"</h4><p id='p2'>"+data.lcvs[i].CommentContent+"</p></div></div></li>")
-        }
-
-        var pageIndex = parseInt($("#PageIndex").val());
-        if (pageIndex == 1) {
-            $("#b1").addClass("disabled")
-            $("#b2").removeClass("disabled")
-        } else if (pageIndex == data.MaxPageIndex) {
-            $("#b2").addClass("disabled")
-            $("#b1").removeClass("disabled")
-        } 
-    }
-
-    function Paging(index1)
-    {
-        if (parseInt($("#MaxPageIndex").val()) != 1) {
-
-            if (index1 == 1) {
-                pageIndex = parseInt($("#PageIndex").val()) - 1
-                console.log(pageIndex)
-            }
-            else if (index1 == -1) {
-                pageIndex = parseInt($("#PageIndex").val()) + 1
-                console.log(pageIndex)
-            }
-            $("#PageIndex").val(pageIndex)
-
+        function Commit() {
+            var Comment = $("#Comment").val();
             var GoodsID = $("#GoodsID").val();
 
-            var data = { "pageIndex": pageIndex, "GoodsID": GoodsID }
-
-            console.log(data)
-            $.ajax({
-                url: "/Home/Paging",
+            var data = { "CommentContent": Comment, "GoodsID": GoodsID }
+            $.ajax ({
+                url: "/User/Commit",
                 type: "POST",
                 data: data,
                 success: function (data) {
-                    data = JSON.parse(data);
-                    console.log(data)
-                    Media(data)
+                    alert(data)
+                    Paging(1,1)
                 },
                 error: function () {
 
                 }
             })
+
         }
 
-    }
+        function Media(data) {
+            $("ul .list-group-item").each(function () {
+                $(this).remove();
+            })
 
-    function ChangeWB(index, result)
-    {
-        if(index == 1)
-            $("#Well").val(result.Well)
-        else if(index == -1)
-            $("#Bad").val(result.Bad)
-    }
+            for (var i = data.lcvs.length - 1; i >= 0; i--) {
+                $(".list-group").prepend("<li class='list-group-item list-group-item-success'><div class='media'><div class='media-left media-middle'><a href='#'><p id='p1'>" + data.lcvs[i].Uname + "</p></a></div><div class='media-body'><h4 class='mediaheading'>" + data.lcvs[i].CommentStartTime + "</h4><p id='p2'>" + data.lcvs[i].CommentContent + "</p></div></div></li>")
+            }
 
-    //异步提交点赞踩
-    function WellBad(index)
-    {
-        var GoodsID = $("#GoodsID").val()
-        var datas = { "GoodsID": GoodsID, "Index": index }
-        $.ajax({
-            url: "/User/WellBad",
-            type: "POST",
-            data: datas,
-            success: function (data) {
-                var result = $.parseJSON(data);
+            var pageIndex = parseInt($("#PageIndex").val());
+            if (pageIndex == 1) {
+                $("#b1").addClass("disabled")
+                $("#b2").removeClass("disabled")
+                $("#b1").attr("disabled", true);
+            } else if (pageIndex == data.MaxPageIndex) {
+                $("#b2").addClass("disabled")
+                $("#b1").removeClass("disabled")
+                $("#b2").attr("disabled", true);
+            }
+        }
 
-                if(index == 1 ) {
-                    ChangeWB(1, result)
-                } else if (index == -1) {
-                    ChangeWB(-1, result)
-                } else {
-                    return alert("点击失败")
+        function Paging(index1, index2) {
+                if (index1 == 1 && index2 == 0) {
+                    pageIndex = parseInt($("#PageIndex").val()) - 1
+                    $("#b2").removeClass("disabled")
+                    $("#b2").attr("disabled", false);
+                    console.log(pageIndex)
+                }
+                else if (index1 == -1 && index2 == 0) {
+                    pageIndex = parseInt($("#PageIndex").val()) + 1
+                    $("#b1").removeClass("disabled")
+                    $("#b1").attr("disabled", false);
+                    console.log(pageIndex)
+                }
+                else if (index1 == 1 && index2 == 1) {
+                    pageIndex = 1
                 }
 
-            },
-            error: function () {
-                alert("点击失败")
-            }
-        })
-    }
+                $("#PageIndex").val(pageIndex)
 
+                var GoodsID = $("#GoodsID").val();
 
+                var data = { "pageIndex": pageIndex, "GoodsID": GoodsID }
 
-    $(function () {
-        // 商品+-
-        $('.li-quantity a').click(function () {
-            var self = $(this);
-            var type = self.attr('data-type'),
-                num = parseFloat(self.siblings('input').val())
-            if (type == 'add') {
-                num += 1
-            } else if (type == 'subtr') {
-                if (num > 1) {
-                    num -= 1
-                } else {
-                    return false
+                console.log(data)
+                $.ajax({
+                    url: "/Home/Paging",
+                    type: "POST",
+                    data: data,
+                    success: function (data) {
+                        data = JSON.parse(data);
+                        console.log(data)
+                        Media(data)
+                    },
+                    error: function () {
+
+                    }
+                })
+            
+
+        }
+
+        function ChangeWB(index, result) {
+            if (index == 1)
+                $("#Well").val(result.Well)
+            else if (index == -1)
+                $("#Bad").val(result.Bad)
+        }
+
+        //异步提交点赞踩
+        function WellBad(index) {
+            var GoodsID = $("#GoodsID").val()
+            var datas = { "GoodsID": GoodsID, "Index": index }
+            $.ajax({
+                url: "/User/WellBad",
+                type: "POST",
+                data: datas,
+                success: function (data) {
+                    var result = $.parseJSON(data);
+
+                    if (index == 1) {
+                        ChangeWB(1, result)
+                    } else if (index == -1) {
+                        ChangeWB(-1, result)
+                    } else {
+                        return alert("点击失败")
+                    }
+
+                },
+                error: function () {
+                    alert("点击失败")
                 }
-            }
-            self.siblings('input').val(num)
-            tamount()
+            })
+        }
+
+
+
+        $(function () {
+            // 商品+-
+            $('.li-quantity a').click(function () {
+                var self = $(this);
+                var type = self.attr('data-type'),
+                    num = parseFloat(self.siblings('input').val())
+                if (type == 'add') {
+                    num += 1
+                } else if (type == 'subtr') {
+                    if (num > 1) {
+                        num -= 1
+                    } else {
+                        return false
+                    }
+                }
+                self.siblings('input').val(num)
+                tamount()
+            });
         });
-    });
-    var sum = 0
-    //计算商品总价格
-    function tamount() {
-        price = $("#price").val()
-        num = $("#num").val()
-        sum = (parseFloat(price) * parseFloat(num))
-        $("#money").html('￥' + sum + '.00')
-    }
-    tamount()
+        var sum = 0
+        //计算商品总价格
+        function tamount() {
+            price = $("#price").val()
+            num = $("#num").val()
+            sum = (parseFloat(price) * parseFloat(num))
+            $("#money").html('￥' + sum + '.00')
+        }
+        tamount()
 
-    //加入购物车
-    function AddCart()
-    {
-        var Num = $("#num").val()
-        var GoodsID = $("#GoodsID").val()
-        var data = { "Num": Num, "GoodsID": GoodsID }
-        $.ajax({
-            url: "/User/AddCart",
-            type: "POST",
-            data: data,
-            success: function (data) {
-                alert(data)
-            },
-            error: function () {
-                alert("加入购物车失败")
-            }
-        })
+        //加入购物车
+        function AddCart() {
+            var Num = $("#num").val()
+            var GoodsID = $("#GoodsID").val()
+            var data = { "Num": Num, "GoodsID": GoodsID }
+            $.ajax({
+                url: "/User/AddCart",
+                type: "POST",
+                data: data,
+                success: function (data) {
+                    alert(data)
+                },
+                error: function () {
+                    alert("加入购物车失败")
+                }
+            })
 
-    }
-</script>
+        }
+    </script>
 }

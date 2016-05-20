@@ -140,17 +140,18 @@ namespace DataAccessLayer
         }
 
         //进行事务操作
-        public static void ExecuteSqlTran(Hashtable SQLStringList)
+        public static int ExecuteSqlTran(Hashtable SQLStringList)
         {
             using(SqlConnection conn = new SqlConnection(connstr))
             {
                 conn.Open();
-                ExecuteSqlTran(conn, SQLStringList);
+                return ExecuteSqlTran(conn, SQLStringList);
             }
         }
 
-        public static void ExecuteSqlTran(SqlConnection conn, Hashtable SQLStringList)
+        public static int ExecuteSqlTran(SqlConnection conn, Hashtable SQLStringList)
         {
+            int val = 0;
             using(SqlTransaction trans = conn.BeginTransaction())
             {
                 SqlCommand cmd = new SqlCommand();
@@ -162,7 +163,7 @@ namespace DataAccessLayer
                         string cmdText = myDE.Key.ToString();
                         SqlParameter[] cmdParms = (SqlParameter[])myDE.Value;
                         PrepareCommand(cmd, conn, trans, cmdText, cmdParms);
-                        int val = cmd.ExecuteNonQuery();
+                        val += cmd.ExecuteNonQuery();
                         cmd.Parameters.Clear();
                     }
                     trans.Commit();
@@ -173,6 +174,7 @@ namespace DataAccessLayer
                     throw;
                 }
             }
+            return val;
         }
 
         private static void PrepareCommand(SqlCommand cmd, SqlConnection conn, SqlTransaction trans, string cmdText, SqlParameter[] cmdParms)
