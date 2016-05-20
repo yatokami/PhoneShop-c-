@@ -69,9 +69,11 @@ namespace PhoneShop.Controllers
             CommentViews.data = lcv;
             PageList<CommentView> StudentPaging = new PageList<CommentView>(6, CommentViews.data);//初始化分页器
             StudentPaging.PageIndex = pageIndex;//指定当前页
-            List<CommentView> lcv2 = StudentPaging.GetPagingData().ToList();
+            List<CommentView> lcvs = StudentPaging.GetPagingData().ToList();
 
-            string jsonData = new JavaScriptSerializer().Serialize(lcv2);
+            int MaxPageIndex = StudentPaging.PageCount;
+            var data = new { lcvs, MaxPageIndex };
+            string jsonData = new JavaScriptSerializer().Serialize(data);
 
             return Content(jsonData);
         }

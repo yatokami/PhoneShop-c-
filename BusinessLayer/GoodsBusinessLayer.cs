@@ -192,17 +192,18 @@ namespace ViewModels
             List<CommentView> lcv = new List<CommentView>();
             if(lc != null)
             {
-                foreach (T_Comment c in lc)
+
+                for (int i = lc.Count-1; i >= 0; i-- )
                 {
                     CommentView cv = new CommentView();
-                    cv.CommentContent = c.CommentContent;
-                    cv.CommentStartTime = c.CommentStarTime;
-                    cv.Uname = c.Uname;
+                    cv.CommentContent = lc[i].CommentContent;
+                    cv.CommentStartTime = lc[i].CommentStarTime;
+                    cv.Uname = lc[i].Uname;
 
                     lcv.Add(cv);
                 }
 
-                return lcv;
+                    return lcv;
             }
             else
             {

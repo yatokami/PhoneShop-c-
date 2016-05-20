@@ -41,7 +41,6 @@
   <ItemGroup>
     <Compile Include="AuthBusinessLayer.cs" />
     <Compile Include="GoodsBusinessLayer.cs" />
-    <Compile Include="PagingInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserBusinessLayer.cs" />
   </ItemGroup>
