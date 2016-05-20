@@ -171,16 +171,43 @@ namespace ViewModels
         #endregion
 
         #region 点赞踩
-        public WellBadView WellBad(int Index, int GoodsID)
+        public WellBadView WellBad(int Index, int GoodsID, string Uname)
         {
             GoodsDataLayer gdl = new GoodsDataLayer();
-            T_WellBad wb = gdl.WellBad(Index, GoodsID);
+            T_WellBad wb = gdl.WellBad(Index, GoodsID, Uname);
             WellBadView wbv = new WellBadView();
 
             wbv.Bad = Convert.ToString(wb.Bads);
             wbv.Well = Convert.ToString(wb.Wells);
 
             return wbv;
+        }
+        #endregion
+
+        #region 显示用户评论
+        public List<CommentView> GetComment(int? GoodsID)
+        {
+            GoodsDataLayer gdl = new GoodsDataLayer();
+            List<T_Comment> lc = gdl.GetComment(GoodsID);
+            List<CommentView> lcv = new List<CommentView>();
+            if(lc != null)
+            {
+                foreach (T_Comment c in lc)
+                {
+                    CommentView cv = new CommentView();
+                    cv.CommentContent = c.CommentContent;
+                    cv.CommentStartTime = c.CommentStarTime;
+                    cv.Uname = c.Uname;
+
+                    lcv.Add(cv);
+                }
+
+                return lcv;
+            }
+            else
+            {
+                return null;
+            }
         }
         #endregion
 

@@ -20,6 +20,7 @@ namespace ViewModels
         public PageList<CartView> CartViews { get; set; }
         public PageList<OrderView> OrderViews { get; set; }
         public PageList<OrderDetailsView> OrderDetailsViews { get; set; }
+        public PageList<CommentView> CommentViews { get; set; }
 
     }
 }

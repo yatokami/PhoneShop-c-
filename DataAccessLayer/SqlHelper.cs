@@ -6,17 +6,23 @@ using System.Text;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
+using System.Collections;
 namespace DataAccessLayer
 {
     public static class SqlHelper
     {
+        //读取配置文件中sql链接数据库语句
         public static readonly string connstr = ConfigurationManager.ConnectionStrings["ShopDB"].ConnectionString;
+
+        //打开数据库
         public static SqlConnection OpenConnection()
         {
             SqlConnection conn = new SqlConnection(connstr);
             conn.Open();
             return conn;
         }
+
+        //返回受影响语句成功是否有
         public static int ExecuteNonQuery(string cmdText,params SqlParameter[] parameters)
         {
             using (SqlConnection conn = new SqlConnection(connstr))
@@ -34,6 +40,8 @@ namespace DataAccessLayer
                 return cmd.ExecuteNonQuery();
             }
         }
+
+        
         public static object ExecuteScalar(string cmdText, params SqlParameter[] parameters)
         {
             using(SqlConnection conn=new SqlConnection(connstr))
@@ -51,6 +59,8 @@ namespace DataAccessLayer
                 return cmd.ExecuteScalar();
             }
         }
+
+        //返回数据库中数据集合
         public static DataTable ExecuteDataTable(string cmdText,params SqlParameter[] parameters)
         {
             using(SqlConnection conn=new SqlConnection(connstr))
@@ -74,6 +84,7 @@ namespace DataAccessLayer
             }
         }
 
+        //返回int类型的一个字段一条的数据
         public static int GetSqlAsInt(string cmdText,params SqlParameter[] parameters)
         {
             using (SqlConnection conn = new SqlConnection(connstr))
@@ -100,9 +111,10 @@ namespace DataAccessLayer
             return result;
         }
 
+        //返回String类型的一个字段一条的数据
         public static string GetSqlAsString(string cmdText,params SqlParameter[] parameters)
         {
-            using(SqlConnection conn=new SqlConnection(connstr))
+            using(SqlConnection conn = new SqlConnection(connstr))
             {
                 conn.Open();
                 return GetSqlAsString(conn, cmdText, parameters);
@@ -126,6 +138,65 @@ namespace DataAccessLayer
             }
             return result;
         }
-       
+
+        //进行事务操作
+        public static void ExecuteSqlTran(Hashtable SQLStringList)
+        {
+            using(SqlConnection conn = new SqlConnection(connstr))
+            {
+                conn.Open();
+                ExecuteSqlTran(conn, SQLStringList);
+            }
+        }
+
+        public static void ExecuteSqlTran(SqlConnection conn, Hashtable SQLStringList)
+        {
+            using(SqlTransaction trans = conn.BeginTransaction())
+            {
+                SqlCommand cmd = new SqlCommand();
+                try
+                {
+                    //循环
+                    foreach (DictionaryEntry myDE in SQLStringList)
+                    {
+                        string cmdText = myDE.Key.ToString();
+                        SqlParameter[] cmdParms = (SqlParameter[])myDE.Value;
+                        PrepareCommand(cmd, conn, trans, cmdText, cmdParms);
+                        int val = cmd.ExecuteNonQuery();
+                        cmd.Parameters.Clear();
+                    }
+                    trans.Commit();
+                }
+                catch
+                {
+                    trans.Rollback();
+                    throw;
+                }
+            }
+        }
+
+        private static void PrepareCommand(SqlCommand cmd, SqlConnection conn, SqlTransaction trans, string cmdText, SqlParameter[] cmdParms)
+        {
+            if (conn.State != ConnectionState.Open)
+                conn.Open();
+            cmd.Connection = conn;
+            cmd.CommandText = cmdText;
+            if (trans != null)
+                cmd.Transaction = trans;
+            cmd.CommandType = CommandType.Text;//cmdType;
+            if (cmdParms != null)
+            {
+                foreach (SqlParameter parameter in cmdParms)
+                {
+                    if ((parameter.Direction == ParameterDirection.InputOutput || parameter.Direction == ParameterDirection.Input) &&
+                    (parameter.Value == null))
+                    {
+                        parameter.Value = DBNull.Value;
+                    }
+                    cmd.Parameters.Add(parameter);
+                }
+            }
+        }
+
     }
 }

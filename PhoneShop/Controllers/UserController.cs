@@ -156,8 +156,9 @@ namespace PhoneShop.Controllers
         [Authorize]
         public ActionResult WellBad(int Index, int GoodsID)
         {
+            string Uname = User.Identity.Name;
             GoodsBusinessLayer ubl = new GoodsBusinessLayer();
-            WellBadView wbv = ubl.WellBad(Index, GoodsID);
+            WellBadView wbv = ubl.WellBad(Index, GoodsID, Uname);
             string jsonData = new JavaScriptSerializer().Serialize(wbv);
 
             return Content(jsonData);

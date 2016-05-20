@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using ViewModels;
 using BusinessEntities;
 using System.Reflection;
+using System.Web.Script.Serialization;
 
 namespace PhoneShop.Controllers
 {
@@ -34,7 +35,7 @@ namespace PhoneShop.Controllers
         }
         
         //单件商品展示
-        public ActionResult Show(int? GoodsID)
+        public ActionResult Show(int? GoodsID, int pageIndex = 1)
         {
             GoodsBusinessLayer gbl = new GoodsBusinessLayer();
             UserListView ulv = new UserListView();
@@ -42,6 +43,13 @@ namespace PhoneShop.Controllers
             {
                 GoodsView lgv = gbl.GetGood(GoodsID);
                 WellBadView wbv = gbl.GetWellBad(GoodsID);
+                List<CommentView> lcv = gbl.GetComment(GoodsID);
+
+                CommentViews.data = lcv;
+                PageList<CommentView> StudentPaging = new PageList<CommentView>(6, CommentViews.data);//初始化分页器
+                StudentPaging.PageIndex = pageIndex;//指定当前页
+
+                ulv.CommentViews = StudentPaging;
                 ulv.WellBad = wbv;
                 ulv.Goods = lgv;
                 ulv.UserName = User.Identity.Name;
@@ -51,6 +59,21 @@ namespace PhoneShop.Controllers
             {
                 return RedirectToAction("../Home/Index");
             }
+        }
+
+        //评论换页
+        public ActionResult Paging(int GoodsID, int pageIndex)
+        {
+            GoodsBusinessLayer gbl = new GoodsBusinessLayer();
+            List<CommentView> lcv = gbl.GetComment(GoodsID);
+            CommentViews.data = lcv;
+            PageList<CommentView> StudentPaging = new PageList<CommentView>(6, CommentViews.data);//初始化分页器
+            StudentPaging.PageIndex = pageIndex;//指定当前页
+            List<CommentView> lcv2 = StudentPaging.GetPagingData().ToList();
+
+            string jsonData = new JavaScriptSerializer().Serialize(lcv2);
+
+            return Content(jsonData);
         }
 
         //显示购物车

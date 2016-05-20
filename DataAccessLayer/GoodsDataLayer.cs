@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BusinessEntities;
 using System.Data;
 using System.Data.SqlClient;
+using System.Collections;
 
 namespace DataAccessLayer
 {
@@ -143,16 +144,34 @@ namespace DataAccessLayer
         }
 
         //点击赞踩
-        public T_WellBad WellBad(int Index, int GoodsID)
+        public T_WellBad WellBad(int Index, int GoodsID, string Uname)
         {
-            int count = 0;
-            if (Index == 1)
+
+            int count = (int)SqlHelper.ExecuteScalar("select count(*) from T_User_Produce where GoodsID = @GoodsID and Uname = @Uname", new SqlParameter("@GoodsID", GoodsID), new SqlParameter("@Uname", Uname));
+
+            if(count == 0)
             {
-                 count = SqlHelper.ExecuteNonQuery("update T_WellBad set Wells += 1 where GoodsID = @GoodsID",new SqlParameter("@GoodsID", GoodsID));
-            }
-            else if(Index == -1)
-            {
-                count = SqlHelper.ExecuteNonQuery("update T_WellBad set Bads += 1 where GoodsID = @GoodsID", new SqlParameter("@GoodsID", GoodsID));
+                Hashtable ht1 = new Hashtable();
+                string s1 = "update T_WellBad set Wells += 1 where GoodsID = @GoodsID";
+                string s2 = "update T_WellBad set Bads += 1 where GoodsID = @GoodsID";
+                string s3 = "insert into T_User_Produce(GoodsID, Uname)Values(@GoodsID, @Uname)";
+                SqlParameter[] paras1 = new SqlParameter[1];
+                paras1[0] = new SqlParameter("@GoodsID", GoodsID);
+                SqlParameter[] paras2 = new SqlParameter[2];
+                paras2[0] = new SqlParameter("@GoodsID", GoodsID);
+                paras2[1] = new SqlParameter("@Uname", Uname);
+                if(Index == 1)
+                {
+                    ht1.Add(s1, paras1);
+                    ht1.Add(s3, paras2);
+                }
+                else if(Index == -1)
+                {
+                    ht1.Add(s2, paras1);
+                    ht1.Add(s3, paras2);
+                }
+
+                SqlHelper.ExecuteSqlTran(ht1);
             }
 
             DataTable dt = SqlHelper.ExecuteDataTable("select * from T_WellBad where GoodsID = @GoodsID", new SqlParameter("@GoodsID", GoodsID));
@@ -160,6 +179,25 @@ namespace DataAccessLayer
             IList<T_WellBad> wbs = ModelConvertHelper<T_WellBad>.ConvertToModel(dt);
 
             return (T_WellBad)wbs[0];
+        }
+
+        //显示用户评论
+        public List<T_Comment> GetComment(int? GoodsID)
+        {
+            try
+            {
+                DataTable dt = SqlHelper.ExecuteDataTable("select * from T_Comment where GoodsID = @GoodsID", new SqlParameter("@GoodsID", GoodsID));
+
+                IList<T_Comment> lc = ModelConvertHelper<T_Comment>.ConvertToModel(dt);
+
+                return lc.ToList();
+
+            }
+            catch
+            {
+                return null;
+            }
+           
         }
 
 
