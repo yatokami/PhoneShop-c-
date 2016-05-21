@@ -19,6 +19,7 @@ namespace ViewModels
             this.PageSize = pageSize > 1 ? pageSize : 1;
             this.DataSource = dataSource;
             PageCount = (int)Math.Ceiling(dataSource.Count() / (double)pageSize);
+            PageCount = (PageCount == 0) ? 1 : PageCount;
         }
         //获取当前页数据
         public IEnumerable<T> GetPagingData()

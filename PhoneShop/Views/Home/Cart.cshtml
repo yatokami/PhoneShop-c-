@@ -70,24 +70,26 @@
         </div>
     </div>
 </div>
-<p>
-    @if (Model.CartViews.HasPrev)
-    {
-        <a href="@Url.Action("Cart", "Home", new { pageIndex = Model.CartViews.PageIndex - 1})">上一页</a>
-    }
-    else
-    {
-        <em style="color:Gray">上一页</em>
-    }
-    @if (Model.CartViews.HasNext)
-    {
-        <a href="@Url.Action("Cart", "Home", new { pageIndex = Model.CartViews.PageIndex + 1})">下一页</a>
-    }
-    else
-    {
-        <em style="color:Gray">下一页</em>
-    }
-</p>
+<nav>
+    <ul class="pager">
+        @if (Model.CartViews.HasPrev)
+        {
+            <li><a href="@Url.Action("Cart", "Home", new { pageIndex = Model.CartViews.PageIndex - 1})">上一页</a></li>
+        }
+        else
+        {
+            <li><a style="color:Gray">上一页</a></li>
+        }
+        @if (Model.CartViews.HasNext)
+        {
+            <li><a href="@Url.Action("Cart", "Home", new { pageIndex = Model.CartViews.PageIndex + 1})">下一页</a></li>
+        }
+        else
+        {
+            <li><a style="color:Gray">下一页</a></li>
+        }
+    </ul>
+</nav>
 }
 
 @section ContentScript{

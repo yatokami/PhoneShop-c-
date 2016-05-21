@@ -25,8 +25,8 @@
     </div>
     </div>
     <div class="input-group">
-        <input id="Well" class="btn btn-danger" type="button" value="@Model.WellBad.Well" onclick="WellBad(1)" style="margin-right:5px" />
-        <input id="Bad" class="btn btn-info" type="button" value="@Model.WellBad.Bad" onclick="WellBad(-1)" style="margin-right:5px" />
+        <button class="btn btn-danger" onclick="WellBad(1)" style="margin-right:5px"><span id="Well" class="glyphicon glyphicon-thumbs-up">@Model.WellBad.Well</span></button>
+        <button class="btn btn-danger" onclick="WellBad(-1)" style="margin-right:5px"><span id=" bad" class="glyphicon glyphicon-thumbs-down">@Model.WellBad.Bad</span></button>
         <input type="button"  class="btn btn-success" value="加入购物车" onclick="AddCart()">
     </div>
     <div class="input-group">
@@ -169,9 +169,9 @@
 
         function ChangeWB(index, result) {
             if (index == 1)
-                $("#Well").val(result.Well)
+                $("#Well").html(result.Well)
             else if (index == -1)
-                $("#Bad").val(result.Bad)
+                $("#Bad").html(result.Bad)
         }
 
         //异步提交点赞踩
@@ -184,7 +184,6 @@
                 data: datas,
                 success: function (data) {
                     var result = $.parseJSON(data);
-
                     if (index == 1) {
                         ChangeWB(1, result)
                     } else if (index == -1) {

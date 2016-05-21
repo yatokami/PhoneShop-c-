@@ -14,7 +14,7 @@
 
 @section ContentBody{
   <div class="row">
-    <div class="col-xs-3" id="myScrollspy">
+    <div class="col-xs-2" id="myScrollspy" style="margin-left:-30px">
         <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="10">
             <li><a href="/Home/Index">首页</a></li>
             @foreach (GoodsTypeView gtv in Model.GoodsTypeView)
@@ -23,35 +23,40 @@
             }
         </ul>
     </div>
-      <div class="col-xs-9">
-          @foreach (var Data in Model.GoodsView.GetPagingData())
-          {
-              <div class="form-group">
-                  <p> 商品名称:@Data.GoodsName</p>
-                 <a href="@Url.Action("Show", "Home", new {GoodsID=Data.GoodsID})"><img style="width:300px;height:300px" class="img-rounded" src="@Data.GoodsPicture" /></a>
-                 <p>单价:@Data.Price</p>
-              </div>
-          }
-      </div>
-
+ 
+@foreach (var Data in Model.GoodsView.GetPagingData())
+{
+    <div class="col-xs-6  col-md-4">
+        <div class="thumbnail">
+            <img class="img-rounded" style="height:100px; width:100px" src="@Data.GoodsPicture" />
+            <div class="caption">
+                <h3>商品名称:@Data.GoodsName</h3>
+                <p>单价:@Data.Price</p>
+                <p><a href="@Url.Action("Show", "Home", new {GoodsID=Data.GoodsID})" class="btn btn-primary" role="button">点击查看详情</a></p>
+            </div>
+        </div>
+    </div>
+}
 </div>
  
-<p>
+<nav>
+    <ul class="pager">
     @if (Model.GoodsView.HasPrev)
     {
-        <a href="@Url.Action("Index", "Home", new { pageIndex = Model.GoodsView.PageIndex - 1, TypeID = Model.GoodView[0].TypeID })">上一页</a>
+       <li> <a href="@Url.Action("Index", "Home", new { pageIndex = Model.GoodsView.PageIndex - 1, TypeID = Model.GoodView[0].TypeID })">上一页</a></li>
     }
     else
     {
-        <em style="color:Gray">上一页</em>
+        <li> <a style="color:Gray">上一页</a></li>
     }
     @if (Model.GoodsView.HasNext)
     {
-        <a href="@Url.Action("Index", "Home", new { pageIndex = Model.GoodsView.PageIndex + 1, TypeID = Model.GoodView[0].TypeID })">下一页</a>
+        <li><a href="@Url.Action("Index", "Home", new { pageIndex = Model.GoodsView.PageIndex + 1, TypeID = Model.GoodView[0].TypeID })">下一页</a></li>
     }
     else
     {
-        <em style="color:Gray">下一页</em>
+        <li><a style="color:Gray">下一页</a></li>
     }
-</p>
+    </ul>
+</nav>
 }
