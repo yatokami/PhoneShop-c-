@@ -95,7 +95,8 @@
                 data: data,
                 success: function (data) {
                     alert(data)
-                    Paging(1,1)
+                    if(data != "用户已评论过")
+                    location.reload();
                 },
                 error: function () {
 
