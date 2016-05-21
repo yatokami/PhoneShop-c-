@@ -20,6 +20,12 @@ namespace PhoneShop
                 defaults: new { controller = "Authentication", action = "Login" }
             );
 
+            routes.MapRoute(
+              name: "Admin",
+              url: "Auth/{action}",
+              defaults: new { controller = "Authentication", action = "Admin" }
+           );
+
             
             routes.MapRoute(
                 name: "Default",

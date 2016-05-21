@@ -48,5 +48,27 @@ namespace PhoneShop.Controllers
              FormsAuthentication.SignOut();
              return RedirectToAction("../Home/Index");
         }
+
+        [HttpGet]
+        public ActionResult Admin()
+        {
+            return View("Admin");
+        }
+
+        [HttpPost]
+        public ActionResult Admin(T_Admin admin)
+        {
+            AuthBusinessLayer abl = new AuthBusinessLayer();
+            string AuthenticatedAdmin = abl.IsValidAdmin(admin);
+            if (AuthenticatedAdmin != "")
+            {
+                Session["Isadmin"] = AuthenticatedAdmin; 
+            }
+            else
+            {
+                return Content("<script>alert('登录失败');location.href='Admin'</script>");
+            }
+            return RedirectToAction("../Admin/Index");
+        }
     }
 }

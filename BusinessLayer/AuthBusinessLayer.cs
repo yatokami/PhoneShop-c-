@@ -19,5 +19,19 @@ namespace ViewModels
             return Uid;
         }
         #endregion
+
+        #region 管理员登录认证权限
+        public string IsValidAdmin(T_Admin admin)
+        {
+            AdminDataLayer adl = new AdminDataLayer();
+            int count = adl.IsValidUser(admin);
+            string AuthenticatedAdmin = "";
+            if(count == 1)
+            {
+                AuthenticatedAdmin = "admin";
+            }
+            return AuthenticatedAdmin;
+        }
+        #endregion
     }
 }
