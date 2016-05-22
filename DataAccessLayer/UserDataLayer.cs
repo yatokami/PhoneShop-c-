@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
@@ -18,7 +16,7 @@ namespace DataAccessLayer
             int count = (int)dt.Rows[0]["Uid"];
             return count;
         }
-        
+
         //个人信息返回
         public T_Users Show(string Uname)
         {
@@ -43,7 +41,7 @@ namespace DataAccessLayer
             }
             return Convert.ToBoolean(count);
         }
-        
+
         //用户个人信息更新
         public bool GetUpdate(T_Users user)
         {
@@ -63,13 +61,13 @@ namespace DataAccessLayer
         public List<T_Order> OrderShow(int Uid)
         {
             DataTable dt = SqlHelper.ExecuteDataTable("select * from T_Order where Uid = @Uid", new SqlParameter("@Uid", Uid));
-            dt.Columns.Add("Num", Type.GetType("System.Int32")); 
-            for(int i = 0; i < dt.Rows.Count; i++)
+            dt.Columns.Add("Num", Type.GetType("System.Int32"));
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                dt.Rows[i]["Num"]=SqlHelper.GetSqlAsInt("select sum(Num) from T_OrderDetail where OrderID = @OrderID", new SqlParameter("@OrderID", Convert.ToInt32(dt.Rows[i]["OrderID"])));
+                dt.Rows[i]["Num"] = SqlHelper.GetSqlAsInt("select sum(Num) from T_OrderDetail where OrderID = @OrderID", new SqlParameter("@OrderID", Convert.ToInt32(dt.Rows[i]["OrderID"])));
             }
 
-             IList<T_Order> orders = ModelConvertHelper<T_Order>.ConvertToModel(dt);
+            IList<T_Order> orders = ModelConvertHelper<T_Order>.ConvertToModel(dt);
             return orders.ToList();
 
         }
@@ -81,6 +79,6 @@ namespace DataAccessLayer
 
             return dt;
         }
-        
+
     }
 }

@@ -1,12 +1,10 @@
 ﻿using BusinessEntities;
-using ViewModels;
+using PhoneShop.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using PhoneShop.Models;
 using System.Web.Script.Serialization;
+using ViewModels;
 
 namespace PhoneShop.Controllers
 {
@@ -38,7 +36,7 @@ namespace PhoneShop.Controllers
         public ActionResult Update(T_Users user)
         {
             UserBusinessLayer rbl = new UserBusinessLayer();
-            if(rbl.GetUpdate(user))
+            if (rbl.GetUpdate(user))
             {
                 return RedirectToAction("UserShow");
             }
@@ -46,7 +44,7 @@ namespace PhoneShop.Controllers
             {
                 return View("My_Info");
             }
-           
+
         }
 
         //用户个人信息显示
@@ -79,7 +77,7 @@ namespace PhoneShop.Controllers
             ulv.UserName = User.Identity.Name;
 
             return View("My_Order", ulv);
-            
+
         }
 
         //订单详情
@@ -107,12 +105,12 @@ namespace PhoneShop.Controllers
             GoodsBusinessLayer gbl = new GoodsBusinessLayer();
             int Uid = Convert.ToInt32(Request.Cookies["Uid"].Value);
             string Uname = User.Identity.Name;
-            
+
             if (gbl.AddCart(GoodsID, Uname, Num, Uid))
             {
                 return this.Json("加入购物车成功");
             }
-            
+
             return this.Json("失败");
         }
 
@@ -142,7 +140,7 @@ namespace PhoneShop.Controllers
         {
             GoodsBusinessLayer gbl = new GoodsBusinessLayer();
 
-            if(gbl.DeleteCart(BuyID))
+            if (gbl.DeleteCart(BuyID))
             {
                 return Content("<script>alert('删除成功');location.href = '/Home/Cart'</script>");
             }
@@ -182,6 +180,6 @@ namespace PhoneShop.Controllers
         //    return View();
         //}
 
-      
+
     }
 }

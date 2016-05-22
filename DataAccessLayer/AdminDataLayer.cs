@@ -1,15 +1,14 @@
 ﻿using BusinessEntities;
-using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
     public class AdminDataLayer
     {
+        //获取管理员登录权限
         public int IsValidUser(T_Admin admin)
         {
             try
@@ -21,6 +20,25 @@ namespace DataAccessLayer
             {
                 return 0;
             }
+        }
+
+        //获取用户信息列表
+        public List<T_Users> GetUsers(string Uname)
+        {
+            Uname = "%" + Uname + "%";
+            DataTable dt = null;
+            if (Uname == null)
+            {
+                dt = SqlHelper.ExecuteDataTable("select * from T_Users");
+
+            }
+            else
+            {
+                dt = SqlHelper.ExecuteDataTable("select * from T_Users where Uname  like @Uname", new SqlParameter("@Uname", Uname));
+            }
+            IList<T_Users> users = ModelConvertHelper<T_Users>.ConvertToModel(dt);
+
+            return users.ToList();
         }
     }
 }

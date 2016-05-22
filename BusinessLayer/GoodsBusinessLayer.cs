@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ViewModels;
+﻿using BusinessEntities;
 using DataAccessLayer;
-using BusinessEntities;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace ViewModels
 {
@@ -57,7 +54,7 @@ namespace ViewModels
                 GoodsView gv = new GoodsView();
                 gv.GoodsID = tg.GoodsID;
                 gv.GoodsName = tg.GoodsName;
-                gv.GoodsPicture = "/Public/images/" + tg.TypeID + "/" + tg.GoodsPicture.Trim()+".jpg";
+                gv.GoodsPicture = "/Public/images/" + tg.TypeID + "/" + tg.GoodsPicture.Trim() + ".jpg";
                 gv.TypeID = tg.TypeID;
                 gv.Price = tg.Price;
                 lgv.Add(gv);
@@ -124,7 +121,7 @@ namespace ViewModels
             GoodsDataLayer gdl = new GoodsDataLayer();
             DataTable dt = gdl.GetCart(Uname);
             IList<CartView> lcv = ModelConvertHelper<CartView>.ConvertToModel(dt);
-            
+
             return lcv.ToList();
         }
         #endregion
@@ -190,10 +187,10 @@ namespace ViewModels
             GoodsDataLayer gdl = new GoodsDataLayer();
             List<T_Comment> lc = gdl.GetComment(GoodsID);
             List<CommentView> lcv = new List<CommentView>();
-            if(lc != null)
+            if (lc != null)
             {
 
-                for (int i = lc.Count-1; i >= 0; i-- )
+                for (int i = lc.Count - 1; i >= 0; i--)
                 {
                     CommentView cv = new CommentView();
                     cv.CommentContent = lc[i].CommentContent;
@@ -203,7 +200,7 @@ namespace ViewModels
                     lcv.Add(cv);
                 }
 
-                    return lcv;
+                return lcv;
             }
             else
             {
@@ -221,7 +218,7 @@ namespace ViewModels
             {
                 return "用户已评论过";
             }
-            else if(count == 2)
+            else if (count == 2)
             {
                 return "评论成功";
             }

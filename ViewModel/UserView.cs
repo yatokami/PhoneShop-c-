@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ViewModels
 {
@@ -16,5 +13,14 @@ namespace ViewModels
         public string Address { get; set; }
         public string PostCode { get; set; }
         public DateTime RegisterTime { get; set; }
+    }
+
+    public class UserViews
+    {
+        public static IEnumerable<UserView> data
+        {
+            get;
+            set;
+        }
     }
 }

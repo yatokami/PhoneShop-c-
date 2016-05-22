@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using ViewModels;
-using BusinessEntities;
-using System.Reflection;
 using System.Web.Script.Serialization;
+using ViewModels;
 
 namespace PhoneShop.Controllers
 {
@@ -14,7 +10,7 @@ namespace PhoneShop.Controllers
     {
         // GET: Home
         //网站主页显示
-   
+
         public ActionResult Index(int? TypeID, int pageIndex = 1)
         {
             GoodsBusinessLayer gbl = new GoodsBusinessLayer();
@@ -33,7 +29,7 @@ namespace PhoneShop.Controllers
 
             return View(ulv);
         }
-        
+
         //单件商品展示
         public ActionResult Show(int? GoodsID, int pageIndex = 1)
         {
@@ -89,7 +85,7 @@ namespace PhoneShop.Controllers
             CartViews.data = lcv;
             PageList<CartView> StudentPaging = new PageList<CartView>(4, CartViews.data);//初始化分页器
             StudentPaging.PageIndex = pageIndex;//指定当前页
-            ulv.CartViews = StudentPaging; 
+            ulv.CartViews = StudentPaging;
             ulv.UserName = User.Identity.Name;
             return View(ulv);
         }

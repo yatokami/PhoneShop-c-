@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminListView.cs" />
     <Compile Include="CartView.cs" />
     <Compile Include="CommentView.cs" />
     <Compile Include="GoodsTypeView.cs" />

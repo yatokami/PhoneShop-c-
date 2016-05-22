@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ViewModels
 {
@@ -15,7 +12,7 @@ namespace ViewModels
         public int Num { get; set; }
         public int Price { get; set; }
         public DateTime BuyDate { get; set; }
-        public string GoodsPicture { get { return pic + ".jpg"; } set { pic = value;} }
+        public string GoodsPicture { get { return pic + ".jpg"; } set { pic = value; } }
         public string GoodsName { get; set; }
     }
     public class CartViews

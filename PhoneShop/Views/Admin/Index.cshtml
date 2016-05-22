@@ -1,4 +1,6 @@
-﻿
+﻿@using ViewModels
+@model AdminListView
+
 @{
     Layout = "~/Views/Shared/Admin_Layout.cshtml";
 }
@@ -22,8 +24,137 @@
     <!-- Main content -->
     <section class="content">
 
-        <!-- Your Page Content Here -->
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">用户信息表</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <form action="@Url.Action("Index", "Admin")" method="post">
+                                <div class="col-sm-6">
+                                    <div id="example1_filter" class="dataTables_filter">
+                                        <label>根据用户名查询:<input id="searchtxt" name="Uname" type="search" class="form-control input-sm" placeholder="" aria-controls="example1"></label><button id="search" type="submit" class="btn btn-block btn-info" style="width:70px;">查询</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>    
+                        <div class="row">          
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>用户名</th>
+                                        <th>性别</th>
+                                        <th>真实姓名</th>
+                                        <th>电话</th>
+                                        <th>邮箱</th>
+                                        <th>地址</th>
+                                        <th>注册时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var Data in Model.Users.GetPagingData())
+                                    {
+                                        <tr role="row" class="odd">
+                                            <td>@Data.Uname</td>
+                                            <td>@Data.Sex</td>
+                                            <td>@Data.RealName</td>
+                                            <td>@Data.Tel</td>
+                                            <td>@Data.Email</td>
+                                            <td>@Data.Address</td>
+                                            <td>@Data.RegisterTime</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">
+                                        总共有 @Model.Users.DataSource.Count() 个用户
+                                    </div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+                                    </div>
+                                    <ul class="pagination">
 
+                                        @if (Model.Users.HasPrev)
+                                        {
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index", "Admin", new { pageIndex = 1 })"><<</a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index", "Admin", new { pageIndex = Model.Users.PageIndex - 1 })"><</a></li>
+
+                                        }
+                                        else
+                                        {
+                                            <li class="paginate_button previous disabled"><a><<</a></li>
+                                            <li class="paginate_button previous disabled"><a><</a></li>
+                                        }
+                                        @for (int i = Model.Users.PageIndex; i <= Model.Users.PageCount + 2; i++)
+                                        {
+                                            if (i >= 3 && i <= Model.Users.PageCount + 2 && i < Model.Users.PageIndex + 6)
+                                            {
+                                                if (i == Model.Users.PageIndex + 2)
+                                                {
+                                                    <li class="paginate_button previous active"><a href="@Url.Action("Index", "Admin", new { pageIndex = (i-2) })">@(i - 2)</a></li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="paginate_button previous"><a href="@Url.Action("Index", "Admin", new { pageIndex = (i-2) })">@(i - 2)</a></li>
+                                                }
+                                            }
+                                            else if (i == Model.Users.PageIndex + 6)
+                                            {
+                                                <li class="paginate_button previous disabled"><a>...</a></li>
+                                            }
+
+                                        }
+                                        @if (Model.Users.HasNext)
+                                        {
+
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index", "Admin", new { pageIndex = Model.Users.PageIndex + 1 })">></a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index", "Admin", new { pageIndex = Model.Users.PageCount })">>></a></li>
+                                        }
+                                        else
+                                        {
+                                            <li class="paginate_button previous disabled"><a>></a></li>
+                                            <li class="paginate_button previous disabled"><a>>></a></li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                           
+                        </div>
+                </div>
+            </div>
+        </div>
+      
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
+}
+
+@section ContentScript{
+<script src="~/Public/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Public/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="~/Public/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="~/Public/plugins/fastclick/fastclick.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="~/Public/dist/js/demo.js"></script>
+
+<script>
+    $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+            "paging": false,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "info": false,
+            "autoWidth": false
+        });
+    });
+</script>
 }

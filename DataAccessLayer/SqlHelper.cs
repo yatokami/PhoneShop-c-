@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Text;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Data;
 using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 namespace DataAccessLayer
 {
     public static class SqlHelper
@@ -23,7 +19,7 @@ namespace DataAccessLayer
         }
 
         //返回受影响语句成功是否有
-        public static int ExecuteNonQuery(string cmdText,params SqlParameter[] parameters)
+        public static int ExecuteNonQuery(string cmdText, params SqlParameter[] parameters)
         {
             using (SqlConnection conn = new SqlConnection(connstr))
             {
@@ -31,9 +27,9 @@ namespace DataAccessLayer
                 return ExecuteNonQuery(conn, cmdText, parameters);
             }
         }
-        public static int ExecuteNonQuery(SqlConnection conn,string cmdText,params SqlParameter[] parameters)
+        public static int ExecuteNonQuery(SqlConnection conn, string cmdText, params SqlParameter[] parameters)
         {
-            using(SqlCommand cmd=conn.CreateCommand())
+            using (SqlCommand cmd = conn.CreateCommand())
             {
                 cmd.CommandText = cmdText;
                 cmd.Parameters.AddRange(parameters);
@@ -41,18 +37,18 @@ namespace DataAccessLayer
             }
         }
 
-        
+
         public static object ExecuteScalar(string cmdText, params SqlParameter[] parameters)
         {
-            using(SqlConnection conn=new SqlConnection(connstr))
+            using (SqlConnection conn = new SqlConnection(connstr))
             {
                 conn.Open();
                 return ExecuteScalar(conn, cmdText, parameters);
             }
         }
-        public static object ExecuteScalar(SqlConnection conn,string cmdText,params SqlParameter[] parameters)
+        public static object ExecuteScalar(SqlConnection conn, string cmdText, params SqlParameter[] parameters)
         {
-            using(SqlCommand cmd=conn.CreateCommand())
+            using (SqlCommand cmd = conn.CreateCommand())
             {
                 cmd.CommandText = cmdText;
                 cmd.Parameters.AddRange(parameters);
@@ -61,21 +57,21 @@ namespace DataAccessLayer
         }
 
         //返回数据库中数据集合
-        public static DataTable ExecuteDataTable(string cmdText,params SqlParameter[] parameters)
+        public static DataTable ExecuteDataTable(string cmdText, params SqlParameter[] parameters)
         {
-            using(SqlConnection conn=new SqlConnection(connstr))
+            using (SqlConnection conn = new SqlConnection(connstr))
             {
                 conn.Open();
                 return ExecuteDataTable(conn, cmdText, parameters);
             }
         }
-        public static DataTable ExecuteDataTable(SqlConnection conn,string cmdText,params SqlParameter[] parameters)
+        public static DataTable ExecuteDataTable(SqlConnection conn, string cmdText, params SqlParameter[] parameters)
         {
-            using(SqlCommand cmd=conn.CreateCommand())
+            using (SqlCommand cmd = conn.CreateCommand())
             {
                 cmd.CommandText = cmdText;
                 cmd.Parameters.AddRange(parameters);
-                using(SqlDataAdapter da=new SqlDataAdapter(cmd))
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                 {
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -85,7 +81,7 @@ namespace DataAccessLayer
         }
 
         //返回int类型的一个字段一条的数据
-        public static int GetSqlAsInt(string cmdText,params SqlParameter[] parameters)
+        public static int GetSqlAsInt(string cmdText, params SqlParameter[] parameters)
         {
             using (SqlConnection conn = new SqlConnection(connstr))
             {
@@ -112,16 +108,16 @@ namespace DataAccessLayer
         }
 
         //返回String类型的一个字段一条的数据
-        public static string GetSqlAsString(string cmdText,params SqlParameter[] parameters)
+        public static string GetSqlAsString(string cmdText, params SqlParameter[] parameters)
         {
-            using(SqlConnection conn = new SqlConnection(connstr))
+            using (SqlConnection conn = new SqlConnection(connstr))
             {
                 conn.Open();
                 return GetSqlAsString(conn, cmdText, parameters);
             }
         }
 
-        public static string GetSqlAsString(SqlConnection conn,string cmdText,params SqlParameter[] parameters)
+        public static string GetSqlAsString(SqlConnection conn, string cmdText, params SqlParameter[] parameters)
         {
             string result = "";
             SqlDataReader reader;
@@ -142,7 +138,7 @@ namespace DataAccessLayer
         //进行事务操作
         public static int ExecuteSqlTran(Hashtable SQLStringList)
         {
-            using(SqlConnection conn = new SqlConnection(connstr))
+            using (SqlConnection conn = new SqlConnection(connstr))
             {
                 conn.Open();
                 return ExecuteSqlTran(conn, SQLStringList);
@@ -152,7 +148,7 @@ namespace DataAccessLayer
         public static int ExecuteSqlTran(SqlConnection conn, Hashtable SQLStringList)
         {
             int val = 0;
-            using(SqlTransaction trans = conn.BeginTransaction())
+            using (SqlTransaction trans = conn.BeginTransaction())
             {
                 SqlCommand cmd = new SqlCommand();
                 try

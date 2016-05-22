@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessEntities;
+﻿using BusinessEntities;
 using DataAccessLayer;
 
 namespace ViewModels
@@ -21,14 +16,14 @@ namespace ViewModels
         #endregion
 
         #region 管理员登录认证权限
-        public string IsValidAdmin(T_Admin admin)
+        public bool IsValidAdmin(T_Admin admin)
         {
             AdminDataLayer adl = new AdminDataLayer();
             int count = adl.IsValidUser(admin);
-            string AuthenticatedAdmin = "";
-            if(count == 1)
+            bool AuthenticatedAdmin = false;
+            if (count == 1)
             {
-                AuthenticatedAdmin = "admin";
+                AuthenticatedAdmin = true;
             }
             return AuthenticatedAdmin;
         }

@@ -1,12 +1,8 @@
 ﻿using BusinessEntities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataAccessLayer;
-using ViewModels;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace ViewModels
 {
@@ -35,7 +31,7 @@ namespace ViewModels
         {
             UserDataLayer sql = new UserDataLayer();
             T_Users user = sql.Show(Uname);
-            UserView uv= new UserView();
+            UserView uv = new UserView();
             List<UserView> luv = new List<UserView>();
 
             uv.RealName = user.RealName;
@@ -58,7 +54,7 @@ namespace ViewModels
 
             List<OrderView> lov = new List<OrderView>();
 
-            foreach(T_Order to in lto)
+            foreach (T_Order to in lto)
             {
                 OrderView ov = new OrderView();
                 ov.Num = to.Num;

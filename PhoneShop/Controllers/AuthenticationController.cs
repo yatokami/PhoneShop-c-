@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BusinessEntities;
+using System;
 using System.Web;
 using System.Web.Mvc;
-using BusinessEntities;
-using ViewModels;
 using System.Web.Security;
+using ViewModels;
 
 namespace PhoneShop.Controllers
 {
@@ -29,24 +27,24 @@ namespace PhoneShop.Controllers
             {
                 //用户认证方法
                 FormsAuthentication.SetAuthCookie(user.Uname, true);
-                HttpCookie cookie = new HttpCookie("Uid"); 
+                HttpCookie cookie = new HttpCookie("Uid");
                 cookie.Value = Convert.ToString(Uid);
-                Response.Cookies.Add(cookie); 
+                Response.Cookies.Add(cookie);
                 return RedirectToAction("../Home/Index");
             }
             else
             {
                 return View("Login");
             }
-            
+
         }
 
         //GET：用户退出
         [HttpGet]
         public ActionResult Logout()
         {
-             FormsAuthentication.SignOut();
-             return RedirectToAction("../Home/Index");
+            FormsAuthentication.SignOut();
+            return RedirectToAction("../Home/Index");
         }
 
         [HttpGet]
@@ -59,13 +57,15 @@ namespace PhoneShop.Controllers
         public ActionResult Admin(T_Admin admin)
         {
             AuthBusinessLayer abl = new AuthBusinessLayer();
-            string AuthenticatedAdmin = abl.IsValidAdmin(admin);
-            if (AuthenticatedAdmin != "")
+            bool AuthenticatedAdmin = abl.IsValidAdmin(admin);
+            if (AuthenticatedAdmin != false)
             {
-                Session["Isadmin"] = AuthenticatedAdmin; 
+                Session["IsAdmin"] = AuthenticatedAdmin;
+                Session["AdminName"] = admin.AdminName;
             }
             else
             {
+                Session["IsAdmin"] = AuthenticatedAdmin;
                 return Content("<script>alert('登录失败');location.href='Admin'</script>");
             }
             return RedirectToAction("../Admin/Index");

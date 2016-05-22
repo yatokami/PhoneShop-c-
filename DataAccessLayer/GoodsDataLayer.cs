@@ -1,12 +1,10 @@
-﻿using System;
+﻿using BusinessEntities;
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessEntities;
 using System.Data;
 using System.Data.SqlClient;
-using System.Collections;
+using System.Linq;
 
 namespace DataAccessLayer
 {
@@ -40,8 +38,8 @@ namespace DataAccessLayer
                     ids += ",";
                 }
             }
-            DataTable dt = SqlHelper.ExecuteDataTable("select * from T_Goods where GoodsID in("+ids+")");
-            
+            DataTable dt = SqlHelper.ExecuteDataTable("select * from T_Goods where GoodsID in(" + ids + ")");
+
             IList<T_Goods> ILgoods = ModelConvertHelper<T_Goods>.ConvertToModel(dt);
             return ILgoods.ToList();
         }
@@ -86,12 +84,12 @@ namespace DataAccessLayer
         public bool Clears(T_BuyInfo bi, string[] GoodsIDs, string[] Nums, string[] BuyIDs)
         {
             int TotalMoney = 0;
-            int[] TotalMoneys = new int[GoodsIDs.Length-1];
+            int[] TotalMoneys = new int[GoodsIDs.Length - 1];
             int count = 0;
-            for(int i = 0 ; i < GoodsIDs.Length - 1; i++)
+            for (int i = 0; i < GoodsIDs.Length - 1; i++)
             {
                 int Price = SqlHelper.GetSqlAsInt("select Price from T_Goods where GoodsID = @GoodsID", new SqlParameter("@GoodsID", GoodsIDs[i]));
-             
+
                 TotalMoneys[i] = Price * Convert.ToInt32(Nums[i]);
                 TotalMoney += Price * Convert.ToInt32(Nums[i]);
             }
@@ -101,13 +99,13 @@ namespace DataAccessLayer
 
             int OrderID = Convert.ToInt32(SqlHelper.ExecuteScalar("insert into T_Order(Uid, Uname, TotalMoney, OrderDate, OrderStatus, PayType, IsPayed, ReceiverName, ReceiverTel, Address, PostCode, Email)Values(@Uid, @Uname, @TotalMoney, getdate(), @OrderStatus, @PayType, @IsPayed, @ReceiverName, @ReceiverTel, @Address, @PostCode, @Email);select @@IDENTITY", new SqlParameter("@Uid", user.Uid), new SqlParameter("@Uname", user.Uname), new SqlParameter("@TotalMoney", TotalMoney), new SqlParameter("@OrderStatus", "未接单"), new SqlParameter("@PayType", "网络支付"), new SqlParameter("@IsPayed", "已付款"), new SqlParameter("@ReceiverName", user.RealName), new SqlParameter("@ReceiverTel", user.Tel), new SqlParameter("@Address", user.Address), new SqlParameter("@PostCode", user.PostCode), new SqlParameter("@Email", user.Email)));
 
-            for (int j = 0; j < GoodsIDs.Length - 1; j++ )
+            for (int j = 0; j < GoodsIDs.Length - 1; j++)
             {
-                 count += SqlHelper.ExecuteNonQuery("insert into T_OrderDetail(OrderID, GoodsID, Num, TotalMoney)Values(@OrderID, @GoodsID, @Num, @TotalMoney)", new SqlParameter("@OrderID", OrderID), new SqlParameter("@GoodsID", GoodsIDs[j]), new SqlParameter("@Num", Nums[j]), new SqlParameter("@TotalMoney", TotalMoneys[j]));
-                 SqlHelper.ExecuteNonQuery("delete from T_BuyInfo where BuyID = @BuyID", new SqlParameter("@BuyID", BuyIDs[j]));
+                count += SqlHelper.ExecuteNonQuery("insert into T_OrderDetail(OrderID, GoodsID, Num, TotalMoney)Values(@OrderID, @GoodsID, @Num, @TotalMoney)", new SqlParameter("@OrderID", OrderID), new SqlParameter("@GoodsID", GoodsIDs[j]), new SqlParameter("@Num", Nums[j]), new SqlParameter("@TotalMoney", TotalMoneys[j]));
+                SqlHelper.ExecuteNonQuery("delete from T_BuyInfo where BuyID = @BuyID", new SqlParameter("@BuyID", BuyIDs[j]));
             }
 
-            if(count == (GoodsIDs.Length - 1))
+            if (count == (GoodsIDs.Length - 1))
             {
                 return true;
             }
@@ -149,7 +147,7 @@ namespace DataAccessLayer
 
             int count = (int)SqlHelper.ExecuteScalar("select count(*) from T_User_Produce where GoodsID = @GoodsID and Uname = @Uname", new SqlParameter("@GoodsID", GoodsID), new SqlParameter("@Uname", Uname));
 
-            if(count == 0)
+            if (count == 0)
             {
                 Hashtable ht1 = new Hashtable();
                 string s1 = "update T_WellBad set Wells += 1 where GoodsID = @GoodsID";
@@ -160,12 +158,12 @@ namespace DataAccessLayer
                 SqlParameter[] paras2 = new SqlParameter[2];
                 paras2[0] = new SqlParameter("@GoodsID", GoodsID);
                 paras2[1] = new SqlParameter("@Uname", Uname);
-                if(Index == 1)
+                if (Index == 1)
                 {
                     ht1.Add(s1, paras1);
                     ht1.Add(s3, paras2);
                 }
-                else if(Index == -1)
+                else if (Index == -1)
                 {
                     ht1.Add(s2, paras1);
                     ht1.Add(s3, paras2);
@@ -197,7 +195,7 @@ namespace DataAccessLayer
             {
                 return null;
             }
-           
+
         }
 
         //提交评论
@@ -246,6 +244,6 @@ namespace DataAccessLayer
         //        SqlHelper.ExecuteNonQuery("insert into T_WellBad(GoodsID, Wells, Bads)Values(@GoodsID, 0, 0)", new SqlParameter("@GoodsID", i));
         //    }
         //}
-      
+
     }
 }
