@@ -251,6 +251,10 @@ namespace ViewModels
         }
         #endregion
 
+        #region 添加已存在型号的商品
+        
+        #endregion
+
         //public void Gets()
         //{
         //    GoodsDataLayer gdl = new GoodsDataLayer();

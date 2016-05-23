@@ -1,6 +1,7 @@
 ﻿using BusinessEntities;
 using BusinessLayer;
 using System.Collections.Generic;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using ViewModels;
@@ -67,11 +68,41 @@ namespace PhoneShop.Controllers
             alv.AdminUser = User.Identity.Name;
             return View(alv);
         }
-        public ActionResult Add_Goods(T_Goods goods, HttpPostedFileBase GoodsPicture)
+        [HttpPost]
+        public ActionResult Add_Goods(T_Goods goods, HttpPostedFileBase GoodsPicture, string BtnSubmit)
         {
+            GoodsBusinessLayer gbl = new GoodsBusinessLayer();
+            string status = "";
+            string FileExt = "";     //檢查扩展名
+            int intFileSize = 0;     //檢查大小(KB)
+            if (BtnSubmit == "提交1")
+            {
+                if (GoodsPicture != null)
+                {
+                    intFileSize = (GoodsPicture.ContentLength / 1024);
+                    if (GoodsPicture.InputStream.Length != 0)
+                    {
+                        if (GoodsPicture.InputStream.Length < 1048576)
+                        {
+                            FileExt = Path.GetFileNameWithoutExtension(GoodsPicture.FileName);
+                            FileExt = Path.GetExtension(GoodsPicture.FileName);
+                            if (FileExt.Equals(".jpg") || FileExt.Equals(".jpeg") || FileExt.Equals(".png") || FileExt.Equals(".gif") || FileExt.Equals(".bmp"))
+                            {
+                                string filename = goods.GoodsName + Path.GetExtension(GoodsPicture.FileName);
+                                GoodsPicture.SaveAs(Server.MapPath("~/Public/images/" + goods.TypeID + "/" + filename));//save file 
+                            }
+                        }
+                    }
+                }
+                
+            }
+            //else if(BtnSubmit == "提交2")
+            //{
+            //    string TypeNmae = Request.Form["TypeNmae"];
+            //    status = gbl.Add_Goods(goods, GoodsPicture, TypeNmae);
+            //}
 
-
-            return View();
+            return RedirectToAction("Add_Goods");
         }
 
 
