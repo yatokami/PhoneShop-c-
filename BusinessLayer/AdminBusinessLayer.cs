@@ -1,5 +1,6 @@
 ﻿using BusinessEntities;
 using DataAccessLayer;
+using System;
 using System.Collections.Generic;
 using ViewModels;
 
@@ -29,6 +30,16 @@ namespace BusinessLayer
             }
 
             return luv;
+        }
+        #endregion
+
+        #region 修改用户密码
+        public bool Changepwd(string Uname, string Upwd)
+        {
+            AdminDataLayer adl = new AdminDataLayer();
+            int count = adl.Changepwd(Uname, Upwd);
+
+            return Convert.ToBoolean(count);
         }
         #endregion
 

@@ -235,6 +235,14 @@ namespace DataAccessLayer
             }
         }
 
+        public List<T_GoodsType> GetGoodType()
+        {
+            DataTable dt = SqlHelper.ExecuteDataTable("select * from T_GoodsType");
+
+            IList<T_GoodsType> gts = ModelConvertHelper<T_GoodsType>.ConvertToModel(dt);
+
+            return gts.ToList();
+        }
 
 
         //public void Gets()

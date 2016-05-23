@@ -40,5 +40,13 @@ namespace DataAccessLayer
 
             return users.ToList();
         }
+
+        //修改用户密码
+        public int Changepwd(string Uname, string Upwd)
+        {
+            int count = SqlHelper.ExecuteNonQuery("update T_Users set Upwd = @Upwd where Uname = @Uname", new SqlParameter("@Upwd", Upwd), new SqlParameter("@Uname", Uname));
+
+            return count;
+        }
     }
 }

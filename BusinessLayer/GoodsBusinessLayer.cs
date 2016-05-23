@@ -230,6 +230,27 @@ namespace ViewModels
 
         #endregion
 
+        #region 查询商品类别
+        public List<GoodsTypeView> GetGoodType()
+        {
+            GoodsDataLayer gdl = new GoodsDataLayer();
+            List<T_GoodsType> gts = gdl.GetGoodType();
+
+            List<GoodsTypeView> gtvs = new List<GoodsTypeView>();
+
+            foreach (T_GoodsType gt in gts)
+            {
+                GoodsTypeView gtv = new GoodsTypeView();
+                gtv.TypeName = gt.TypeName;
+                gtv.TypeID = gt.TypeID;
+                gtvs.Add(gtv);
+            }
+
+            return gtvs;
+
+        }
+        #endregion
+
         //public void Gets()
         //{
         //    GoodsDataLayer gdl = new GoodsDataLayer();
