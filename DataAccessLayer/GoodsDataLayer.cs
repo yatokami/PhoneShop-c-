@@ -235,6 +235,7 @@ namespace DataAccessLayer
             }
         }
 
+        //下拉框显示手机品牌
         public List<T_GoodsType> GetGoodType()
         {
             DataTable dt = SqlHelper.ExecuteDataTable("select * from T_GoodsType");
@@ -253,5 +254,58 @@ namespace DataAccessLayer
         //    }
         //}
 
+        //添加已存在品牌手机
+        public int Add_Goods(T_Goods goods)
+        {
+            int count = SqlHelper.ExecuteNonQuery("insert into T_Goods(GoodsName, Price, GoodsPicture, TypeID, AddDate)Values(@GoodsName, @Price, @GoodsPicture, @TypeID, getdate())", new SqlParameter("@GoodsName", goods.GoodsName), new SqlParameter("@Price", goods.Price), new SqlParameter("@GoodsPicture", goods.GoodsPicture), new SqlParameter("@TypeID", goods.TypeID));
+
+            return count;
+        }
+
+        //添加未存在品牌手机
+        public int Add_Goods(T_Goods goods, string TypeName)
+        {
+
+            string s1 = "insert into T_GoodsType(TypeID,TypeName)Values(@TypeID,@TypeName)";
+            string s2 = "insert into T_Goods(GoodsName, Price, GoodsPicture, TypeID, AddDate)Values(@GoodsName, @Price, @GoodsPicture, @TypeID, getdate())";
+            SqlParameter[] paras1 = new SqlParameter[2];
+            paras1[0] = new SqlParameter("@TypeID", goods.TypeID);
+            paras1[1] = new SqlParameter("@TypeName", TypeName);
+            SqlParameter[] paras2 = new SqlParameter[4];
+            paras2[0] = new SqlParameter("@GoodsName", goods.GoodsName);
+            paras2[1] = new SqlParameter("@Price", goods.Price);
+            paras2[2] = new SqlParameter("@GoodsPicture", goods.GoodsPicture);
+            paras2[3] = new SqlParameter("@TypeID", goods.TypeID);
+            Hashtable ht1 = new Hashtable();
+            ht1.Add(s1, paras1);
+            ht1.Add(s2, paras2);
+            int count = SqlHelper.ExecuteSqlTran(ht1);
+            return count;
+        }
+
+        public List<T_Goods> GetGoods(string GoodsName)
+        {
+            GoodsName = "%" + GoodsName + "%";
+            DataTable dt = null;
+            if (GoodsName == null)
+            {
+                dt = SqlHelper.ExecuteDataTable("select * from T_Goods");
+
+            }
+            else
+            {
+                dt = SqlHelper.ExecuteDataTable("select * from T_Goods where GoodsName  like @GoodsName", new SqlParameter("@GoodsName", GoodsName));
+            }
+            IList<T_Goods> goods = ModelConvertHelper<T_Goods>.ConvertToModel(dt);
+
+            return goods.ToList();
+        }
+
+        public int Update_Goods(T_Goods good)
+        {
+            int count = SqlHelper.ExecuteNonQuery("update T_Goods set Price = @Price where GoodsID = @GoodsID", new SqlParameter("@Price", good.Price), new SqlParameter("@GoodsID", good.GoodsID));
+
+            return count;
+        }
     }
 }

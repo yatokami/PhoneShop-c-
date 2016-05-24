@@ -1165,6 +1165,8 @@
     <Content Include="Views\Authentication\Admin.cshtml" />
     <Content Include="Views\Admin\User_Password.cshtml" />
     <Content Include="Views\Admin\Add_Goods.cshtml" />
+    <Content Include="Views\Admin\Update_Goods.cshtml" />
+    <Content Include="Views\Admin\Index_Goods.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

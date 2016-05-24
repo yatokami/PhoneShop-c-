@@ -54,7 +54,7 @@ namespace ViewModels
                 GoodsView gv = new GoodsView();
                 gv.GoodsID = tg.GoodsID;
                 gv.GoodsName = tg.GoodsName;
-                gv.GoodsPicture = "/Public/images/" + tg.TypeID + "/" + tg.GoodsPicture.Trim() + ".jpg";
+                gv.GoodsPicture = "/Public/images/" + tg.TypeID + "/" + tg.GoodsPicture.Trim();
                 gv.TypeID = tg.TypeID;
                 gv.Price = tg.Price;
                 lgv.Add(gv);
@@ -98,9 +98,10 @@ namespace ViewModels
             GoodsView gv = new GoodsView();
             gv.GoodsID = tg.GoodsID;
             gv.GoodsName = tg.GoodsName;
-            gv.GoodsPicture = "/Public/images/" + tg.TypeID + "/" + tg.GoodsPicture.Trim() + ".jpg";
+            gv.GoodsPicture = "/Public/images/" + tg.TypeID + "/" + tg.GoodsPicture.Trim();
             gv.TypeID = gv.TypeID;
             gv.Price = tg.Price;
+            gv.AddDate = Convert.ToString(tg.AddDate);
 
             return gv;
         }
@@ -251,8 +252,22 @@ namespace ViewModels
         }
         #endregion
 
-        #region 添加已存在型号的商品
-        
+        #region 添加已存在品牌的商品
+        public string Add_Goods(T_Goods goods)
+        {
+            GoodsDataLayer gdl = new GoodsDataLayer();
+            int status = gdl.Add_Goods(goods);
+            if (status == 1)
+            {
+                return "上传成功";
+            }
+            else
+            {
+                return "上传失败";
+            }
+
+        }
+
         #endregion
 
         //public void Gets()
@@ -260,5 +275,49 @@ namespace ViewModels
         //    GoodsDataLayer gdl = new GoodsDataLayer();
         //    gdl.Gets();
         //}
+        #region 添加未存在品牌的商品
+        public string Add_Goods(T_Goods goods, string TypeNmae)
+        {
+            GoodsDataLayer gdl = new GoodsDataLayer();
+            int status = gdl.Add_Goods(goods, TypeNmae);
+            if (status > 0)
+            {
+                return "上传成功";
+            }
+            else
+            {
+                return "上传失败";
+            }
+        }
+        #endregion
+
+        public List<GoodsView> GetGoods(string GoodsName)
+        {
+            GoodsDataLayer gdl = new GoodsDataLayer();
+            List<GoodsView> lgv = new List<GoodsView>();
+            List<T_Goods> ltg = new List<T_Goods>();
+
+            ltg = gdl.GetGoods(GoodsName);
+            foreach (T_Goods tg in ltg)
+            {
+                GoodsView gv = new GoodsView();
+                gv.GoodsID = tg.GoodsID;
+                gv.GoodsName = tg.GoodsName;
+                gv.GoodsPicture = "/Public/images/" + tg.TypeID + "/" + tg.GoodsPicture.Trim();
+                gv.TypeID = tg.TypeID;
+                gv.Price = tg.Price;
+                gv.AddDate = Convert.ToString(tg.AddDate);
+                lgv.Add(gv);
+            }
+            return lgv;
+        }
+
+        public bool Update_Goods(T_Goods good)
+        {
+            GoodsDataLayer gdl = new GoodsDataLayer();
+            int status = gdl.Update_Goods(good);
+
+            return Convert.ToBoolean(status);
+        }
     }
 }

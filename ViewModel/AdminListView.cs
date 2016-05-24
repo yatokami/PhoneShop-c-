@@ -7,5 +7,6 @@ namespace ViewModels
         public string AdminUser { get; set; }
         public PageList<UserView> Users { get; set; }
         public List<GoodsTypeView> GoodsType { get; set; }
+        public PageList<GoodsView> GoodsView { get; set; }
     }
 }

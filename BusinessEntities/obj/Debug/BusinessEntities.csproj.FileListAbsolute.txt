@@ -2,4 +2,3 @@ G:\Study\ASP.net_work\PhoneShop\BusinessEntities\bin\Debug\BusinessEntities.dll
 G:\Study\ASP.net_work\PhoneShop\BusinessEntities\bin\Debug\BusinessEntities.pdb
 G:\Study\ASP.net_work\PhoneShop\BusinessEntities\obj\Debug\BusinessEntities.dll
 G:\Study\ASP.net_work\PhoneShop\BusinessEntities\obj\Debug\BusinessEntities.pdb
-G:\Study\ASP.net_work\PhoneShop\BusinessEntities\obj\Debug\BusinessEntities.csprojResolveAssemblyReference.cache

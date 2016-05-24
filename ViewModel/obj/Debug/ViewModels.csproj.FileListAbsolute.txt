@@ -1,5 +1,5 @@
 G:\Study\ASP.net_work\PhoneShop\ViewModel\bin\Debug\ViewModel.dll
 G:\Study\ASP.net_work\PhoneShop\ViewModel\bin\Debug\ViewModel.pdb
-G:\Study\ASP.net_work\PhoneShop\ViewModel\obj\Debug\ViewModels.csprojResolveAssemblyReference.cache
 G:\Study\ASP.net_work\PhoneShop\ViewModel\obj\Debug\ViewModel.dll
 G:\Study\ASP.net_work\PhoneShop\ViewModel\obj\Debug\ViewModel.pdb
+G:\Study\ASP.net_work\PhoneShop\ViewModel\obj\Debug\ViewModels.csprojResolveAssemblyReference.cache

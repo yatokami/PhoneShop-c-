@@ -48,8 +48,8 @@
                 <li class="active treeview">
                     <a href="#"><i class="fa fa-link"></i> <span>商品管理</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                        <li class="active"><a href="#"><i class="fa fa-circle-o"></i>新商品入库</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i>修改商品信息</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i>新商品入库</a></li>
+                        <li class="active"><a href="#"><i class="fa fa-circle-o"></i>修改商品信息</a></li>
                         <li><a href="#"><i class="fa fa-circle-o"></i>查询商品信息</a></li>
                         <li><a href="#"><i class="fa fa-circle-o"></i>删除旧商品</a></li>
                     </ul>
@@ -84,12 +84,12 @@
         <section class="content-header">
             <h1>
                 商品管理
-                <small>添加新商品</small>
+                <small>商品价格修改</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i>管理界面</a></li>
                 <li class="active">商品管理</li>
-                <li class="active">新商品入库</li>
+                <li class="active">商品信息更新</li>
             </ol>
         </section>
 
@@ -104,83 +104,95 @@
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <div id="example1_filter" class="dataTables_filter">
-                                        <label>商品品牌已存在</label>
+                                <form action="@Url.Action("Update_Goods", "Admin")" method="get">
+                                    <div class="col-sm-6">
+                                        <div id="example1_filter" class="dataTables_filter">
+                                            <label>根据商品名查询:<input id="searchtxt" name="GoodsName" type="search" class="form-control input-sm" placeholder="" aria-controls="example1"></label><input id="search" type="submit" class="btn btn-block btn-info" style="width:70px;" value="查询">
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
-                            <form  action="/Admin/Add_Goods" method="post" enctype="multipart/form-data">
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>手机品牌</th>
+                                            <th>手机编号</th>
                                             <th>手机型号</th>
                                             <th>手机价格</th>
-                                            <th>手机图片</th>
                                             <th>提交</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr role="row" class="odd">
-                                            <td>
-                                                <select name="TypeID" class="form-control">
-                                                    @foreach (GoodsTypeView gt in Model.GoodsType)
-                                                    {
-                                                        <option value="@gt.TypeID">@gt.TypeName</option>
-                                                    }
-                                                </select>
-                                            </td>
-                                            <td><input name="GoodsName" class="form-control" type="text" /></td>
-                                            <td><input name="Price" class="form-control" type="text" /></td>
-                                            <td><input name="GoodsPicture" class="form-control" type="file" /></td>
-                                            <td><input name="BtnSubmit" type="submit" value="提交1" class="btn btn-block btn-primary"></td>
-                                        </tr>
+                                        @foreach (var Data in Model.GoodsView.GetPagingData())
+                                        { 
+                                            <tr role="row" class="odd">
+                                                <td>@Data.GoodsID</td>
+                                                <td>@Data.GoodsName</td>
+                                                <td><input id="@Data.GoodsID" class="form-control" type="text" value="@Data.Price" /></td>
+                                                <td><button name="@Data.GoodsID" type="submit" class="btn btn-block btn-primary" onclick="Update_Goods(this)">修改</button></td>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">新商品入库</h3>
-                        </div><!-- /.box-header -->
-                        <div class="box-body">
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <div id="example1_filter" class="dataTables_filter">
-                                        <label>商品品牌未存在</label>
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">
+                                        总共查到 @Model.GoodsView.DataSource.Count() 条数据
                                     </div>
                                 </div>
-                            </div>
-                            <form action="/Admin/Add_Goods" method="post" enctype="multipart/form-data">
-                                <table id="example2" class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>手机品牌</th>
-                                            <th>手机型号</th>
-                                            <th>手机价格</th>
-                                            <th>手机图片</th>
-                                            <th>提交</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr role="row" class="odd">
-                                            <td><input name="TypeNmae" class="form-control" type="text" /></td>
-                                            <td><input name="GoodsName" class="form-control" type="text" /></td>
-                                            <td><input name="Price" class="form-control" type="text" /></td>
-                                            <td><input name="GoodsPicture" class="form-control" type="file" /></td>
-                                            <td><input name="BtnSubmit" type="submit" value="提交2" class="btn btn-block btn-primary"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+                                    </div>
+                                    <ul class="pagination">
 
-                            </form>
+                                        @if (Model.GoodsView.HasPrev)
+                                        {
+                                            <li class="paginate_button previous"><a href="@Url.Action("Update_Goods", "Admin", new { pageIndex = 1 })"><<</a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Update_Goods", "Admin", new { pageIndex = Model.GoodsView.PageIndex - 1 })"><</a></li>
+
+                                        }
+                                        else
+                                        {
+                                            <li class="paginate_button previous disabled"><a><<</a></li>
+                                            <li class="paginate_button previous disabled"><a><</a></li>
+                                        }
+                                        @for (int i = Model.GoodsView.PageIndex; i <= Model.GoodsView.PageCount + 2; i++)
+                                        {
+                                            if (i >= 3 && i <= Model.GoodsView.PageCount + 2 && i < Model.GoodsView.PageIndex + 6)
+                                            {
+                                                if (i == Model.GoodsView.PageIndex + 2)
+                                                {
+                                                    <li class="paginate_button previous active"><a href="@Url.Action("Update_Goods", "Admin", new { pageIndex = (i - 2) })">@(i - 2)</a></li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="paginate_button previous"><a href="@Url.Action("Update_Goods", "Admin", new { pageIndex = (i - 2) })">@(i - 2)</a></li>
+                                                }
+                                            }
+                                            else if (i == Model.GoodsView.PageIndex + 6)
+                                            {
+                                                <li class="paginate_button previous disabled"><a>...</a></li>
+                                            }
+
+                                        }
+                                        @if (Model.GoodsView.HasNext)
+                                        {
+
+                                            <li class="paginate_button previous"><a href="@Url.Action("Update_Goods", "Admin", new { pageIndex = Model.GoodsView.PageIndex + 1 })">></a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Update_Goods", "Admin", new { pageIndex = Model.GoodsView.PageCount })">>></a></li>
+                                        }
+                                        else
+                                        {
+                                            <li class="paginate_button previous disabled"><a>></a></li>
+                                            <li class="paginate_button previous disabled"><a>>></a></li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-
         </section><!-- /.content -->
     </div><!-- /.content-wrapper -->
 }
@@ -207,5 +219,32 @@
             "autoWidth": false
         });
     });
+    function Update_Goods(obj) {
+        var Price = $('#' + obj.name).val()
+        var GoodsID = obj.name
+        var data = { "Price": Price, "GoodsID": GoodsID }
+
+        if (Price != "") {
+            $.ajax({
+                url: "/Admin/Update_Goods",
+                type: "POST",
+                data: data,
+                success: function (data) {
+                    data = JSON.stringify(data)
+                    if (data == "true") {
+                        alert("修改成功")
+                        location.reload();
+                    } else {
+                        alert("修改失败")
+                    }
+                },
+                error: function () {
+
+                }
+            })
+        } else {
+            alert("输入不能为空");
+        }
+    }
     </script>
 }

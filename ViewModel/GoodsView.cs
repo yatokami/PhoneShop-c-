@@ -9,6 +9,7 @@ namespace ViewModels
         public int Price { get; set; }
         public string GoodsPicture { get; set; }
         public int TypeID { get; set; }
+        public string AddDate { get; set; }
     }
     public class GoodsViews
     {
