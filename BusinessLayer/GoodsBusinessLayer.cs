@@ -319,5 +319,13 @@ namespace ViewModels
 
             return Convert.ToBoolean(status);
         }
+
+        public bool Delete_Goods(T_Goods good)
+        {
+            GoodsDataLayer gdl = new GoodsDataLayer();
+            int status = gdl.Delete_Goods(good);
+
+            return Convert.ToBoolean(status);
+        }
     }
 }

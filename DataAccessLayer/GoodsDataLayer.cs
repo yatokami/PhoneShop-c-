@@ -307,5 +307,12 @@ namespace DataAccessLayer
 
             return count;
         }
+
+        public int Delete_Goods(T_Goods good)
+        {
+            int count = SqlHelper.ExecuteNonQuery("delete from T_Goods where GoodsID = @GoodsID", new SqlParameter("@GoodsID", good.GoodsID));
+
+            return count;
+        }
     }
 }

@@ -186,14 +186,7 @@ namespace PhoneShop.Controllers
         public ActionResult Update_Goods(string GoodsName, int pageIndex = 1)
         {
             AdminListView alv = new AdminListView();
-            GoodsBusinessLayer gbl = new GoodsBusinessLayer();
-            List<GoodsView> lgv = gbl.GetGoods(GoodsName);
-
-            GoodsViews.data = lgv;
-            PageList<GoodsView> StudentPaging = new PageList<GoodsView>(10, GoodsViews.data);//初始化分页器
-            StudentPaging.PageIndex = pageIndex;//指定当前页
-            alv.GoodsView = StudentPaging;
-            alv.AdminUser = User.Identity.Name;
+            alv = PageGoods(GoodsName, pageIndex);
             return View(alv);
         }
         //更新商品
@@ -206,8 +199,32 @@ namespace PhoneShop.Controllers
             return Json(status);
         }
 
-        //查看商品信息
+        //查看商品信息  
         public ActionResult Index_Goods(string GoodsName, int pageIndex = 1)
+        {
+            AdminListView alv = new AdminListView();
+            alv = PageGoods(GoodsName, pageIndex);
+            return View(alv);
+        }
+        //删除商品
+        [HttpGet]
+        public ActionResult Delete_Goods(string GoodsName, int pageIndex = 1)
+        {
+            AdminListView alv = new AdminListView();
+            alv = PageGoods(GoodsName, pageIndex);
+            return View(alv);
+        }
+
+        [HttpPost]
+        public ActionResult Delete_Goods(T_Goods good)
+        {
+            GoodsBusinessLayer abl = new GoodsBusinessLayer();
+            bool status = abl.Delete_Goods(good);
+
+            return Json(status);
+        }
+        //分页展示商品
+        public AdminListView PageGoods(string GoodsName, int pageIndex)
         {
             AdminListView alv = new AdminListView();
             GoodsBusinessLayer gbl = new GoodsBusinessLayer();
@@ -218,7 +235,8 @@ namespace PhoneShop.Controllers
             StudentPaging.PageIndex = pageIndex;//指定当前页
             alv.GoodsView = StudentPaging;
             alv.AdminUser = User.Identity.Name;
-            return View(alv);
+
+            return alv;
         }
     }
 }
