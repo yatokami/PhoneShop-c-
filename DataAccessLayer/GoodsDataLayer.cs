@@ -283,9 +283,9 @@ namespace DataAccessLayer
             return count;
         }
 
+        //手机信息查看
         public List<T_Goods> GetGoods(string GoodsName)
         {
-            GoodsName = "%" + GoodsName + "%";
             DataTable dt = null;
             if (GoodsName == null)
             {
@@ -294,20 +294,21 @@ namespace DataAccessLayer
             }
             else
             {
+                GoodsName = "%" + GoodsName + "%";
                 dt = SqlHelper.ExecuteDataTable("select * from T_Goods where GoodsName  like @GoodsName", new SqlParameter("@GoodsName", GoodsName));
             }
             IList<T_Goods> goods = ModelConvertHelper<T_Goods>.ConvertToModel(dt);
 
             return goods.ToList();
         }
-
+        //更新手机价格
         public int Update_Goods(T_Goods good)
         {
             int count = SqlHelper.ExecuteNonQuery("update T_Goods set Price = @Price where GoodsID = @GoodsID", new SqlParameter("@Price", good.Price), new SqlParameter("@GoodsID", good.GoodsID));
 
             return count;
         }
-
+        //删除手机
         public int Delete_Goods(T_Goods good)
         {
             int count = SqlHelper.ExecuteNonQuery("delete from T_Goods where GoodsID = @GoodsID", new SqlParameter("@GoodsID", good.GoodsID));

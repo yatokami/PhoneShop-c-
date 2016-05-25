@@ -57,9 +57,9 @@
                 <li class="active treeview">
                     <a href="#"><i class="fa fa-link"></i> <span>订单管理</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                        <li class="active"><a href="#"><i class="fa fa-circle-o"></i>已审核订单</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i>已审核订单</a></li>
                         <li><a href="#"><i class="fa fa-circle-o"></i>未审核订单</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i>查询用户订单详情</a></li>
+                        <li class="active"><a href="#"><i class="fa fa-circle-o"></i>查询用户订单详情</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -84,12 +84,12 @@
         <section class="content-header">
             <h1>
                 订单管理
-                <small>已审核订单</small>
+                <small>订单列表</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i>管理界面</a></li>
                 <li class="active">订单管理</li>
-                <li class="active">已审核订单</li>
+                <li class="active">订单列表</li>
             </ol>
         </section>
 
@@ -100,11 +100,11 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">已审核订单列表</h3>
+                            <h3 class="box-title">订单列表</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="row">
-                                <form action="@Url.Action("Pass_Order", "Admin")" method="get">
+                                <form action="@Url.Action("Index_Order", "Admin")" method="get">
                                     <div class="col-sm-6">
                                         <div id="example1_filter" class="dataTables_filter">
                                             <label>根据用户查询:<input id="searchtxt" name="Uname" type="search" class="form-control input-sm" placeholder="" aria-controls="example1"></label><button id="search" type="submit" class="btn btn-block btn-info" style="width:70px;">查询</button>
@@ -124,7 +124,7 @@
                                         <th>真实姓名</th>
                                         <th>联系电话</th>
                                         <th>地址</th>
-                                        <th>取消订单</th>
+                                        <th>订单状态</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -139,7 +139,7 @@
                                             <td>@Data.ReceiverName</td>
                                             <td>@Data.ReceiverTel</td>
                                             <td>@Data.Address</td>
-                                            <td><button name="@Data.OrderID" type="submit" class="btn btn-block btn-primary" onclick="Cancel_Order(this)">取消订单</button></td>
+                                            <td>@Data.OrderStatus</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -158,8 +158,8 @@
 
                                         @if (Model.AdminOrderViews.HasPrev)
                                         {
-                                            <li class="paginate_button previous"><a href="@Url.Action("Pass_Order", "Admin", new { pageIndex = 1 })"><<</a></li>
-                                            <li class="paginate_button previous"><a href="@Url.Action("Pass_Order", "Admin", new { pageIndex = Model.AdminOrderViews.PageIndex - 1 })"><</a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Order", "Admin", new { pageIndex = 1 })"><<</a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Order", "Admin", new { pageIndex = Model.AdminOrderViews.PageIndex - 1 })"><</a></li>
 
                                         }
                                         else
@@ -173,11 +173,11 @@
                                             {
                                                 if (i == Model.AdminOrderViews.PageIndex + 2)
                                                 {
-                                                    <li class="paginate_button previous active"><a href="@Url.Action("Pass_Order", "Admin", new { pageIndex = (i - 2) })">@(i - 2)</a></li>
+                                                    <li class="paginate_button previous active"><a href="@Url.Action("Index_Order", "Admin", new { pageIndex = (i - 2) })">@(i - 2)</a></li>
                                                 }
                                                 else
                                                 {
-                                                    <li class="paginate_button previous"><a href="@Url.Action("Pass_Order", "Admin", new { pageIndex = (i - 2) })">@(i - 2)</a></li>
+                                                    <li class="paginate_button previous"><a href="@Url.Action("Index_Order", "Admin", new { pageIndex = (i - 2) })">@(i - 2)</a></li>
                                                 }
                                             }
                                             else if (i == Model.AdminOrderViews.PageIndex + 6)
@@ -189,8 +189,8 @@
                                         @if (Model.AdminOrderViews.HasNext)
                                         {
 
-                                            <li class="paginate_button previous"><a href="@Url.Action("Pass_Order", "Admin", new { pageIndex = Model.AdminOrderViews.PageIndex + 1 })">></a></li>
-                                            <li class="paginate_button previous"><a href="@Url.Action("Pass_Order", "Admin", new { pageIndex = Model.AdminOrderViews.PageCount })">>></a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Order", "Admin", new { pageIndex = Model.AdminOrderViews.PageIndex + 1 })">></a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Order", "Admin", new { pageIndex = Model.AdminOrderViews.PageCount })">>></a></li>
                                         }
                                         else
                                         {
@@ -232,31 +232,5 @@
             "autoWidth": false
         });
     });
-    function Cancel_Order(obj) {
-        var OrderID = obj.name;
-        var data = { "OrderID": OrderID }
-
-        if (OrderID != "") {
-            $.ajax({
-                url: "/Admin/Cancel_Order",
-                type: "POST",
-                data: data,
-                success: function (data) {
-                    data = JSON.stringify(data)
-                    if (data == "true") {
-                        alert("取消成功")
-                        location.reload();
-                    } else {
-                        alert("取消失败")
-                    }
-                },
-                error: function () {
-
-                }
-            })
-        } else {
-            alert("删除失败");
-        }
-    }
     </script>
 }

@@ -254,7 +254,15 @@ namespace PhoneShop.Controllers
         public ActionResult Pass_Order(string Uname, int pageIndex = 1)
         {
             AdminListView alv = new AdminListView();
-            alv = PageOrder(Uname, pageIndex);
+            alv = PageOrder(Uname, pageIndex,1);
+            return View(alv);
+        }
+        //已接单订单显示
+        [HttpGet]
+        public ActionResult Unpass_Order(string Uname, int pageIndex = 1)
+        {
+            AdminListView alv = new AdminListView();
+            alv = PageOrder(Uname, pageIndex,2);
             return View(alv);
         }
         [HttpPost]
@@ -265,13 +273,28 @@ namespace PhoneShop.Controllers
 
             return Json(status);
         }
+        [HttpPost]
+        public ActionResult Upass_Order(int OrderID)
+        {
+            GoodsBusinessLayer abl = new GoodsBusinessLayer();
+            bool status = abl.Upass_Order(OrderID, 2);
+
+            return Json(status);
+        }
+        [HttpGet]
+        public ActionResult Index_Order(string Uname, int pageIndex = 1)
+        {
+            AdminListView alv = new AdminListView();
+            alv = PageOrder(Uname, pageIndex, 0);
+            return View(alv);
+        }
 
         //订单分页
-        public AdminListView PageOrder(string Uname, int pageIndex)
+        public AdminListView PageOrder(string Uname, int pageIndex, int index)
         {
             AdminListView alv = new AdminListView();
             GoodsBusinessLayer gbl = new GoodsBusinessLayer();
-            List<AdminOrderView> aovs = gbl.GetOrders(Uname,1);
+            List<AdminOrderView> aovs = gbl.GetOrders(Uname,index);
 
             AdminOrderViews.data = aovs;
             PageList<AdminOrderView> StudentPaging = new PageList<AdminOrderView>(10, AdminOrderViews.data);//初始化分页器

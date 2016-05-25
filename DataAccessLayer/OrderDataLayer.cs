@@ -13,30 +13,59 @@ namespace DataAccessLayer
     {
         public List<T_Order> GetOrders(string uname, int v)
         {
-            DataTable dt = new DataTable();
+            DataTable dt1 = new DataTable();
+            DataTable dt2 = new DataTable();
             IList<T_Order> orders = null;
             string OrderStatus = "";
-            if (v == 1)
+            if (v != 0)
             {
-                OrderStatus = "已接单";
-            }
-            else if(v == 2)
-            {
-                OrderStatus = "未接单";
-            }
-            if (uname == null)
-            {
-                dt = SqlHelper.ExecuteDataTable("select * from T_Order where OrderStatus = @OrderStatus", new SqlParameter("@OrderStatus", OrderStatus));
-                dt.Columns.Add("Num", Type.GetType("System.Int32"));
-                for (int i = 0; i < dt.Rows.Count; i++)
+                if (v == 1)
                 {
-                    dt.Rows[i]["Num"] = SqlHelper.GetSqlAsInt("select sum(Num) from T_OrderDetail where OrderID = @OrderID",  new SqlParameter("@OrderID", Convert.ToInt32(dt.Rows[i]["OrderID"].ToString())));
+                    OrderStatus = "已接单";
                 }
-
-                orders = ModelConvertHelper<T_Order>.ConvertToModel(dt);
-                
+                else if (v == 2)
+                {
+                    OrderStatus = "未接单";
+                }
+                if (uname == null)
+                {
+                    dt1 = SqlHelper.ExecuteDataTable("select * from T_Order where OrderStatus = @OrderStatus", new SqlParameter("@OrderStatus", OrderStatus));
+                    dt2 = AddColums(dt1);
+                }
+                else
+                {
+                    uname = "%" + uname + "%";
+                    dt1 = SqlHelper.ExecuteDataTable("select * from T_Order where OrderStatus = @OrderStatus and Uname like @Uname", new SqlParameter("@OrderStatus", OrderStatus), new SqlParameter("@Uname", uname));
+                    dt2 = AddColums(dt1);
+                }
             }
+            else
+            {
+                if (uname == null)
+                {
+                    dt1 = SqlHelper.ExecuteDataTable("select * from T_Order");
+                    dt2 = AddColums(dt1);
+                }
+                else
+                {
+                    uname = "%" + uname + "%";
+                    dt1 = SqlHelper.ExecuteDataTable("select * from T_Order where Uname like @Uname",new SqlParameter("@Uname", uname));
+                    dt2 = AddColums(dt1);
+                    
+                }
+            }
+            orders = ModelConvertHelper<T_Order>.ConvertToModel(dt2);
             return orders.ToList();
+        }
+
+        public DataTable AddColums(DataTable dt)
+        {
+            dt.Columns.Add("Num", Type.GetType("System.Int32"));
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                dt.Rows[i]["Num"] = SqlHelper.GetSqlAsInt("select sum(Num) from T_OrderDetail where OrderID = @OrderID", new SqlParameter("@OrderID", Convert.ToInt32(dt.Rows[i]["OrderID"].ToString())));
+            }
+            return dt;
         }
 
         public int Update_Order(int orderID, int v)

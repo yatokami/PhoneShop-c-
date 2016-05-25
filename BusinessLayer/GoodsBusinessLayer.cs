@@ -345,7 +345,7 @@ namespace ViewModels
             {
                 AdminOrderView aov = new AdminOrderView();
                 aov.ReceiverTel = order.ReceiverTel;
-                aov.Address = aov.Address;
+                aov.Address = order.Address;
                 aov.IsPayed = order.IsPayed;
                 aov.Num = order.Num;
                 aov.Uname = order.Uname;
@@ -354,11 +354,20 @@ namespace ViewModels
                 aov.ReceiverName = order.ReceiverName;
                 aov.PayType = order.PayType;
                 aov.OrderID = order.OrderID;
+                aov.OrderStatus = order.OrderStatus;
 
                 aovs.Add(aov);
             }
             return aovs;
 
+        }
+
+        public bool Upass_Order(int orderID, int v)
+        {
+            OrderDataLayer odl = new OrderDataLayer();
+            int status = odl.Update_Order(orderID, v);
+
+            return Convert.ToBoolean(status);
         }
     }
 }

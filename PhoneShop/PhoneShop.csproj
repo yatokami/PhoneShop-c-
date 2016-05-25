@@ -141,6 +141,8 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1011,7 +1013,7 @@
     <Content Include="Public\plugins\timepicker\bootstrap-timepicker.js" />
     <Content Include="Public\plugins\timepicker\bootstrap-timepicker.min.css" />
     <Content Include="Public\plugins\timepicker\bootstrap-timepicker.min.js" />
-    <Content Include="Public\stylesheets\ionicons.min.css" />
+    <Content Include="Content\css\ionicons.min.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Public\bootstrap\css\bootstrap.css.map" />
@@ -1123,6 +1125,11 @@
     <Content Include="Public\plugins\datatables\extensions\TableTools\Readme.md" />
     <Content Include="Public\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="Public\plugins\input-mask\phone-codes\phone-codes.json" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1171,6 +1178,8 @@
     <Content Include="Views\Admin\Index_Goods.cshtml" />
     <Content Include="Views\Admin\Delete_Goods.cshtml" />
     <Content Include="Views\Admin\Pass_Order.cshtml" />
+    <Content Include="Views\Admin\Unpass_Order.cshtml" />
+    <Content Include="Views\Admin\Index_Order.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
