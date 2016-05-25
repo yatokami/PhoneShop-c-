@@ -43,6 +43,7 @@
     <Compile Include="AdminDataLayer.cs" />
     <Compile Include="GoodsDataLayer.cs" />
     <Compile Include="ModelConvertHelper.cs" />
+    <Compile Include="OrderDataLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlHelper.cs" />
     <Compile Include="UserDataLayer.cs" />

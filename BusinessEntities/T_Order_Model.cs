@@ -5,6 +5,7 @@ namespace BusinessEntities
     {
         public int OrderID { get; set; }
         public int Uid { get; set; }
+        public string Uname { get; set; }
         public int TotalMoney { get; set; }
         public DateTime OrderDate { get; set; }
         public string OrderStatus { get; set; }

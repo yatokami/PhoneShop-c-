@@ -8,5 +8,6 @@ namespace ViewModels
         public PageList<UserView> Users { get; set; }
         public List<GoodsTypeView> GoodsType { get; set; }
         public PageList<GoodsView> GoodsView { get; set; }
+        public PageList<AdminOrderView> AdminOrderViews { get; set; }
     }
 }

@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminListView.cs" />
+    <Compile Include="AdminOrderView.cs" />
     <Compile Include="CartView.cs" />
     <Compile Include="CommentView.cs" />
     <Compile Include="GoodsTypeView.cs" />

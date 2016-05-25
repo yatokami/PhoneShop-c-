@@ -48,6 +48,7 @@ namespace PhoneShop.Controllers
 
             return View("User_Password", alv);
         }
+
         //密码修改
         public ActionResult Changepwd(string Uname, string Upwd)
         {
@@ -58,6 +59,7 @@ namespace PhoneShop.Controllers
             return Json(status);
 
         }
+
         //添加已型号新商品
         [HttpGet]
         public ActionResult Add_Goods()
@@ -70,6 +72,7 @@ namespace PhoneShop.Controllers
             alv.AdminUser = User.Identity.Name;
             return View(alv);
         }
+
         //添加未有型号新商品
         [HttpPost]
         public ActionResult Add_Goods(T_Goods goods, HttpPostedFileBase GoodsPicture, string BtnSubmit)
@@ -112,6 +115,7 @@ namespace PhoneShop.Controllers
 
             return RedirectToAction("Add_Goods");
         }
+
         //上传图片文件
         public string UploadPicture1(T_Goods goods, HttpPostedFileBase GoodsPicture)
         {
@@ -141,6 +145,7 @@ namespace PhoneShop.Controllers
             }
             return "1";
         }
+
         //上传图片文件
         public string[] UploadPicture2(T_Goods goods, HttpPostedFileBase GoodsPicture)
         {
@@ -181,7 +186,8 @@ namespace PhoneShop.Controllers
             files[0] = "1";
             return files;
         }
-        //更新商品
+
+        //更新商品界面
         [HttpGet]
         public ActionResult Update_Goods(string GoodsName, int pageIndex = 1)
         {
@@ -189,6 +195,7 @@ namespace PhoneShop.Controllers
             alv = PageGoods(GoodsName, pageIndex);
             return View(alv);
         }
+
         //更新商品
         [HttpPost]
         public ActionResult Update_Goods(T_Goods good)
@@ -206,7 +213,8 @@ namespace PhoneShop.Controllers
             alv = PageGoods(GoodsName, pageIndex);
             return View(alv);
         }
-        //删除商品
+
+        //删除商品界面
         [HttpGet]
         public ActionResult Delete_Goods(string GoodsName, int pageIndex = 1)
         {
@@ -215,6 +223,7 @@ namespace PhoneShop.Controllers
             return View(alv);
         }
 
+        //删除商品
         [HttpPost]
         public ActionResult Delete_Goods(T_Goods good)
         {
@@ -223,6 +232,7 @@ namespace PhoneShop.Controllers
 
             return Json(status);
         }
+
         //分页展示商品
         public AdminListView PageGoods(string GoodsName, int pageIndex)
         {
@@ -234,6 +244,39 @@ namespace PhoneShop.Controllers
             PageList<GoodsView> StudentPaging = new PageList<GoodsView>(10, GoodsViews.data);//初始化分页器
             StudentPaging.PageIndex = pageIndex;//指定当前页
             alv.GoodsView = StudentPaging;
+            alv.AdminUser = User.Identity.Name;
+
+            return alv;
+        }
+
+        //已接单订单显示
+        [HttpGet]
+        public ActionResult Pass_Order(string Uname, int pageIndex = 1)
+        {
+            AdminListView alv = new AdminListView();
+            alv = PageOrder(Uname, pageIndex);
+            return View(alv);
+        }
+        [HttpPost]
+        public ActionResult Cancel_Order(int OrderID)
+        {
+            GoodsBusinessLayer abl = new GoodsBusinessLayer();
+            bool status = abl.Cancel_Order(OrderID,1);
+
+            return Json(status);
+        }
+
+        //订单分页
+        public AdminListView PageOrder(string Uname, int pageIndex)
+        {
+            AdminListView alv = new AdminListView();
+            GoodsBusinessLayer gbl = new GoodsBusinessLayer();
+            List<AdminOrderView> aovs = gbl.GetOrders(Uname,1);
+
+            AdminOrderViews.data = aovs;
+            PageList<AdminOrderView> StudentPaging = new PageList<AdminOrderView>(10, AdminOrderViews.data);//初始化分页器
+            StudentPaging.PageIndex = pageIndex;//指定当前页
+            alv.AdminOrderViews = StudentPaging;
             alv.AdminUser = User.Identity.Name;
 
             return alv;

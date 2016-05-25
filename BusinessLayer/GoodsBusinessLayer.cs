@@ -327,5 +327,38 @@ namespace ViewModels
 
             return Convert.ToBoolean(status);
         }
+
+        public bool Cancel_Order(int orderID, int v)
+        {
+            OrderDataLayer odl = new OrderDataLayer();
+            int status = odl.Update_Order(orderID,v);
+
+            return Convert.ToBoolean(status);
+        }
+
+        public List<AdminOrderView> GetOrders(string uname, int v)
+        {
+            OrderDataLayer odl = new OrderDataLayer();
+            List<T_Order> oders = odl.GetOrders(uname, v);
+            List<AdminOrderView> aovs = new List<AdminOrderView>();
+            foreach(T_Order order in oders)
+            {
+                AdminOrderView aov = new AdminOrderView();
+                aov.ReceiverTel = order.ReceiverTel;
+                aov.Address = aov.Address;
+                aov.IsPayed = order.IsPayed;
+                aov.Num = order.Num;
+                aov.Uname = order.Uname;
+                aov.OrederDate = order.OrderDate.ToString();
+                aov.TotalMoney = order.TotalMoney;
+                aov.ReceiverName = order.ReceiverName;
+                aov.PayType = order.PayType;
+                aov.OrderID = order.OrderID;
+
+                aovs.Add(aov);
+            }
+            return aovs;
+
+        }
     }
 }
