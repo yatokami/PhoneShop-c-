@@ -50,7 +50,7 @@
                     <ul class="treeview-menu">
                         <li><a href="#"><i class="fa fa-circle-o"></i>新商品入库</a></li>
                         <li><a href="#"><i class="fa fa-circle-o"></i>修改商品信息</a></li>
-                        <li class="active"><a href=" #"><i class="fa fa-circle-o"></i>查询商品信息</a></li>
+                        <li class="active"><a href="#"><i class="fa fa-circle-o"></i>查询商品信息</a></li>
                         <li><a href="#"><i class="fa fa-circle-o"></i>删除旧商品</a></li>
                     </ul>
                 </li>
@@ -150,8 +150,8 @@
 
                                         @if (Model.GoodsView.HasPrev)
                                         {
-                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Goods", "Admin", new { pageIndex = 1 })"><<</a></li>
-                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Goods", "Admin", new { pageIndex = Model.GoodsView.PageIndex - 1 })"><</a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Goods", "Admin", new { GoodsName = (string)Model.GoodsName, pageIndex = 1 })"><<</a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Goods", "Admin", new {GoodsName = (string)Model.GoodsName,  pageIndex = Model.GoodsView.PageIndex - 1 })"><</a></li>
 
                                         }
                                         else
@@ -165,11 +165,11 @@
                                             {
                                                 if (i == Model.GoodsView.PageIndex + 2)
                                                 {
-                                                    <li class="paginate_button previous active"><a href="@Url.Action("Index_Goods", "Admin", new { pageIndex = (i - 2) })">@(i - 2)</a></li>
+                                                    <li class="paginate_button previous active"><a href="@Url.Action("Index_Goods", "Admin", new { GoodsName = (string)Model.GoodsName, pageIndex = (i - 2) })">@(i - 2)</a></li>
                                                 }
                                                 else
                                                 {
-                                                    <li class="paginate_button previous"><a href="@Url.Action("Index_Goods", "Admin", new { pageIndex = (i - 2) })">@(i - 2)</a></li>
+                                                    <li class="paginate_button previous"><a href="@Url.Action("Index_Goods", "Admin", new { GoodsName = (string)Model.GoodsName, pageIndex = (i - 2) })">@(i - 2)</a></li>
                                                 }
                                             }
                                             else if (i == Model.GoodsView.PageIndex + 6)
@@ -181,8 +181,8 @@
                                         @if (Model.GoodsView.HasNext)
                                         {
 
-                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Goods", "Admin", new { pageIndex = Model.GoodsView.PageIndex + 1 })">></a></li>
-                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Goods", "Admin", new { pageIndex = Model.GoodsView.PageCount })">>></a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Goods", "Admin", new { GoodsName = (string)Model.GoodsName, pageIndex = Model.GoodsView.PageIndex + 1 })">></a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Goods", "Admin", new { GoodsName = (string)Model.GoodsName, pageIndex = Model.GoodsView.PageCount })">>></a></li>
                                         }
                                         else
                                         {

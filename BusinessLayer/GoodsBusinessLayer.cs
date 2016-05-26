@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Core;
 
 namespace ViewModels
 {
@@ -291,6 +292,7 @@ namespace ViewModels
         }
         #endregion
 
+        #region 商品列表获取
         public List<GoodsView> GetGoods(string GoodsName)
         {
             GoodsDataLayer gdl = new GoodsDataLayer();
@@ -311,7 +313,9 @@ namespace ViewModels
             }
             return lgv;
         }
+        #endregion
 
+        #region 更新商品价格
         public bool Update_Goods(T_Goods good)
         {
             GoodsDataLayer gdl = new GoodsDataLayer();
@@ -319,7 +323,9 @@ namespace ViewModels
 
             return Convert.ToBoolean(status);
         }
+        #endregion
 
+        #region 删除商品
         public bool Delete_Goods(T_Goods good)
         {
             GoodsDataLayer gdl = new GoodsDataLayer();
@@ -327,21 +333,25 @@ namespace ViewModels
 
             return Convert.ToBoolean(status);
         }
+        #endregion
 
+        #region 取消订单
         public bool Cancel_Order(int orderID, int v)
         {
             OrderDataLayer odl = new OrderDataLayer();
-            int status = odl.Update_Order(orderID,v);
+            int status = odl.Update_Order(orderID, v);
 
             return Convert.ToBoolean(status);
         }
+        #endregion
 
+        #region 获取订单列表
         public List<AdminOrderView> GetOrders(string uname, int v)
         {
             OrderDataLayer odl = new OrderDataLayer();
             List<T_Order> oders = odl.GetOrders(uname, v);
             List<AdminOrderView> aovs = new List<AdminOrderView>();
-            foreach(T_Order order in oders)
+            foreach (T_Order order in oders)
             {
                 AdminOrderView aov = new AdminOrderView();
                 aov.ReceiverTel = order.ReceiverTel;
@@ -359,9 +369,10 @@ namespace ViewModels
                 aovs.Add(aov);
             }
             return aovs;
-
         }
+        #endregion
 
+        #region 接受订单
         public bool Upass_Order(int orderID, int v)
         {
             OrderDataLayer odl = new OrderDataLayer();
@@ -369,5 +380,36 @@ namespace ViewModels
 
             return Convert.ToBoolean(status);
         }
+        #endregion
+
+        #region 获取评论列表
+        public List<CommentView> GetComments(string goodsID)
+        {
+            GoodsDataLayer gdl = new GoodsDataLayer();
+            List<T_Comment> comments = gdl.GetComments(goodsID);
+            List<CommentView> lcv = new List<CommentView>();
+            foreach (T_Comment comment in comments)
+            {
+                CommentView cv = new CommentView();
+                cv.CommentContent = comment.CommentContent;
+                cv.CommentStartTime = comment.CommentStarTime.ToString();
+                cv.GoodsID = comment.GoodsID;
+                cv.CommentID = comment.CommentID;
+                cv.Uname = comment.Uname;
+                lcv.Add(cv);
+            }
+            return lcv;
+        }
+        #endregion
+
+        #region 删除评论
+        public bool Delete_Comment(int commentID)
+        {
+            GoodsDataLayer gdl = new GoodsDataLayer();
+            bool status = gdl.Delete_Comment(commentID);
+
+            return status;
+        }
+        #endregion
     }
 }

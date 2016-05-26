@@ -3,7 +3,7 @@ using System.Collections;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-namespace DataAccessLayer
+namespace Core
 {
     public static class SqlHelper
     {

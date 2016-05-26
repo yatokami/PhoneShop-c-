@@ -5,3 +5,5 @@ G:\Study\ASP.net_work\PhoneShop\DataAccessLayer\bin\Debug\BusinessEntities.pdb
 G:\Study\ASP.net_work\PhoneShop\DataAccessLayer\obj\Debug\DataAccessLayer.csprojResolveAssemblyReference.cache
 G:\Study\ASP.net_work\PhoneShop\DataAccessLayer\obj\Debug\DataAccessLayer.dll
 G:\Study\ASP.net_work\PhoneShop\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+G:\Study\ASP.net_work\PhoneShop\DataAccessLayer\bin\Debug\Core.dll
+G:\Study\ASP.net_work\PhoneShop\DataAccessLayer\bin\Debug\Core.pdb

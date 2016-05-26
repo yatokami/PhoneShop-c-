@@ -8,9 +8,7 @@ namespace PhoneShop.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: Home
         //网站主页显示
-
         public ActionResult Index(int? TypeID, int pageIndex = 1)
         {
             GoodsBusinessLayer gbl = new GoodsBusinessLayer();

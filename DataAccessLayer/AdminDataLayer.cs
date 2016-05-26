@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-
+using Core;
 namespace DataAccessLayer
 {
     public class AdminDataLayer
@@ -27,7 +27,7 @@ namespace DataAccessLayer
         {
             Uname = "%" + Uname + "%";
             DataTable dt = null;
-            if (Uname == null)
+            if (Uname == null || Uname == "")
             {
                 dt = SqlHelper.ExecuteDataTable("select * from T_Users");
 

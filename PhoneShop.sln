@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneShop", "PhoneShop\PhoneShop.csproj", "{52FD2AAF-27B6-46B9-8103-8225D652554A}"
 EndProject
@@ -18,6 +18,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessEntities", "BusinessEntities\BusinessEntities.csproj", "{8B6CDF15-BBD0-4F0F-96E5-49C214F1CD1B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{BDBC4C36-EA0F-4485-956D-08EA19239307}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cores", "Cores", "{9676245F-3760-43F7-BB5B-842DE84CF033}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{AB2D322E-D894-4C73-9B50-A1AE6FFA5F0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,10 @@ Global
 		{BDBC4C36-EA0F-4485-956D-08EA19239307}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDBC4C36-EA0F-4485-956D-08EA19239307}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDBC4C36-EA0F-4485-956D-08EA19239307}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB2D322E-D894-4C73-9B50-A1AE6FFA5F0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB2D322E-D894-4C73-9B50-A1AE6FFA5F0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB2D322E-D894-4C73-9B50-A1AE6FFA5F0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB2D322E-D894-4C73-9B50-A1AE6FFA5F0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,5 +62,6 @@ Global
 		{F4437C86-D9FF-4302-811F-25CF7285DE82} = {40AE1466-5048-4D63-9611-B6B06D128C44}
 		{8B6CDF15-BBD0-4F0F-96E5-49C214F1CD1B} = {40AE1466-5048-4D63-9611-B6B06D128C44}
 		{BDBC4C36-EA0F-4485-956D-08EA19239307} = {8042F160-1FE4-4EB5-8DA9-92FE20C1E7C9}
+		{AB2D322E-D894-4C73-9B50-A1AE6FFA5F0D} = {9676245F-3760-43F7-BB5B-842DE84CF033}
 	EndGlobalSection
 EndGlobal

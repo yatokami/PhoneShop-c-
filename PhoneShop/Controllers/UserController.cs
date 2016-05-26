@@ -15,7 +15,6 @@ namespace PhoneShop.Controllers
         {
             return View();
         }
-
         //POST:用户注册
         [HttpPost]
         public ActionResult Insert(T_Users user)

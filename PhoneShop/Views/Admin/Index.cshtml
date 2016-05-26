@@ -156,8 +156,8 @@
 
                                         @if (Model.Users.HasPrev)
                                         {
-                                            <li class="paginate_button previous"><a href="@Url.Action("Index", "Admin", new { pageIndex = 1 })"><<</a></li>
-                                            <li class="paginate_button previous"><a href="@Url.Action("Index", "Admin", new { pageIndex = Model.Users.PageIndex - 1 })"><</a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index", "Admin", new { Uname = (string)Model.Uname, pageIndex = 1 })"><<</a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index", "Admin", new { Uname = (string)Model.Uname, pageIndex = Model.Users.PageIndex - 1 })"><</a></li>
 
                                         }
                                         else
@@ -171,11 +171,11 @@
                                             {
                                                 if (i == Model.Users.PageIndex + 2)
                                                 {
-                                                    <li class="paginate_button previous active"><a href="@Url.Action("Index", "Admin", new { pageIndex = (i-2) })">@(i - 2)</a></li>
+                                                    <li class="paginate_button previous active"><a href="@Url.Action("Index", "Admin", new {Uname = (string)Model.Uname, pageIndex = (i-2) })">@(i - 2)</a></li>
                                                 }
                                                 else
                                                 {
-                                                    <li class="paginate_button previous"><a href="@Url.Action("Index", "Admin", new { pageIndex = (i-2) })">@(i - 2)</a></li>
+                                                    <li class="paginate_button previous"><a href="@Url.Action("Index", "Admin", new { Uname = (string)Model.Uname, pageIndex = (i-2) })">@(i - 2)</a></li>
                                                 }
                                             }
                                             else if (i == Model.Users.PageIndex + 6)
@@ -187,8 +187,8 @@
                                         @if (Model.Users.HasNext)
                                         {
 
-                                            <li class="paginate_button previous"><a href="@Url.Action("Index", "Admin", new { pageIndex = Model.Users.PageIndex + 1 })">></a></li>
-                                            <li class="paginate_button previous"><a href="@Url.Action("Index", "Admin", new { pageIndex = Model.Users.PageCount })">>></a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index", "Admin", new { Uname = (string)Model.Uname, pageIndex = Model.Users.PageIndex + 1 })">></a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index", "Admin", new { Uname = (string)Model.Uname, pageIndex = Model.Users.PageCount })">>></a></li>
                                         }
                                         else
                                         {

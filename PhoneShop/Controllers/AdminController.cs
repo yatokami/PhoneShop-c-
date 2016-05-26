@@ -13,40 +13,42 @@ namespace PhoneShop.Controllers
     //[AdminFilter]
     public class AdminController : Controller
     {
-        // GET: Admin
         //用户列表查询
         public ActionResult Index(string Uname, int pageIndex = 1)
         {
-            AdminBusinessLayer abl = new AdminBusinessLayer();
-
-            List<UserView> luv = abl.GetUsers(Uname);
             AdminListView alv = new AdminListView();
+            alv = PageUser(Uname, pageIndex = 1);
 
-            UserViews.data = luv;
-            PageList<UserView> StudentPaging = new PageList<UserView>(10, UserViews.data);//初始化分页器
-            StudentPaging.PageIndex = pageIndex;//指定当前页
-
-            alv.Users = StudentPaging;
-            alv.AdminUser = User.Identity.Name;
 
             return View("Index", alv);
         }
         //用户列表显示
         public ActionResult User_Password(string Uname, int pageIndex = 1)
         {
+            AdminListView alv = new AdminListView();
+            alv = PageUser(Uname, pageIndex = 1);
+
+
+            return View("User_Password", alv);
+        }
+
+        public AdminListView PageUser(string Uname, int pageIndex = 1)
+        {
+            AdminListView alv = new AdminListView();
             AdminBusinessLayer abl = new AdminBusinessLayer();
 
             List<UserView> luv = abl.GetUsers(Uname);
-            AdminListView alv = new AdminListView();
+
 
             UserViews.data = luv;
             PageList<UserView> StudentPaging = new PageList<UserView>(10, UserViews.data);//初始化分页器
             StudentPaging.PageIndex = pageIndex;//指定当前页
+
             alv.Users = StudentPaging;
             alv.AdminUser = User.Identity.Name;
+            alv.Uname = Uname;
 
-
-            return View("User_Password", alv);
+            return alv;
         }
 
         //密码修改
@@ -245,7 +247,7 @@ namespace PhoneShop.Controllers
             StudentPaging.PageIndex = pageIndex;//指定当前页
             alv.GoodsView = StudentPaging;
             alv.AdminUser = User.Identity.Name;
-
+            alv.GoodsName = GoodsName;
             return alv;
         }
 
@@ -254,25 +256,30 @@ namespace PhoneShop.Controllers
         public ActionResult Pass_Order(string Uname, int pageIndex = 1)
         {
             AdminListView alv = new AdminListView();
-            alv = PageOrder(Uname, pageIndex,1);
+            alv = PageOrder(Uname, pageIndex, 1);
             return View(alv);
         }
-        //已接单订单显示
+
+        //未接单订单显示
         [HttpGet]
         public ActionResult Unpass_Order(string Uname, int pageIndex = 1)
         {
             AdminListView alv = new AdminListView();
-            alv = PageOrder(Uname, pageIndex,2);
+            alv = PageOrder(Uname, pageIndex, 2);
             return View(alv);
         }
+
+        //取消订单
         [HttpPost]
         public ActionResult Cancel_Order(int OrderID)
         {
             GoodsBusinessLayer abl = new GoodsBusinessLayer();
-            bool status = abl.Cancel_Order(OrderID,1);
+            bool status = abl.Cancel_Order(OrderID, 1);
 
             return Json(status);
         }
+
+        //接受订单
         [HttpPost]
         public ActionResult Upass_Order(int OrderID)
         {
@@ -281,6 +288,8 @@ namespace PhoneShop.Controllers
 
             return Json(status);
         }
+
+        //订单情况列表
         [HttpGet]
         public ActionResult Index_Order(string Uname, int pageIndex = 1)
         {
@@ -294,15 +303,44 @@ namespace PhoneShop.Controllers
         {
             AdminListView alv = new AdminListView();
             GoodsBusinessLayer gbl = new GoodsBusinessLayer();
-            List<AdminOrderView> aovs = gbl.GetOrders(Uname,index);
+            List<AdminOrderView> aovs = gbl.GetOrders(Uname, index);
 
             AdminOrderViews.data = aovs;
             PageList<AdminOrderView> StudentPaging = new PageList<AdminOrderView>(10, AdminOrderViews.data);//初始化分页器
             StudentPaging.PageIndex = pageIndex;//指定当前页
             alv.AdminOrderViews = StudentPaging;
             alv.AdminUser = User.Identity.Name;
+            alv.Uname = Uname;
 
             return alv;
+        }
+
+        //评论列表显示
+        [HttpGet]
+        public ActionResult Index_Comment(string GoodsID, int pageIndex = 1)
+        {
+            AdminListView alv = new AdminListView();
+            GoodsBusinessLayer gbl = new GoodsBusinessLayer();
+            List<CommentView> lcv = gbl.GetComments(GoodsID);
+
+            CommentViews.data = lcv;
+            PageList<CommentView> StudentPaging = new PageList<CommentView>(10, CommentViews.data);
+            StudentPaging.PageIndex = pageIndex;//指定当前页
+            alv.CommentViews = StudentPaging;
+            alv.AdminUser = User.Identity.Name;
+            alv.GoodsID = GoodsID;
+
+            return View(alv);
+        }
+
+        //删除评论
+        [HttpPost]
+        public JsonResult Delete_Comment(int CommentID)
+        {
+            GoodsBusinessLayer gbl = new GoodsBusinessLayer();
+            bool status = gbl.Delete_Comment(CommentID);
+
+            return Json(status);
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 
-namespace DataAccessLayer
+namespace Core
 {
     /// <summary>
     /// 实体转换辅助类

@@ -1180,6 +1180,7 @@
     <Content Include="Views\Admin\Pass_Order.cshtml" />
     <Content Include="Views\Admin\Unpass_Order.cshtml" />
     <Content Include="Views\Admin\Index_Order.cshtml" />
+    <Content Include="Views\Admin\Index_Comment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

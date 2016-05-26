@@ -9,3 +9,5 @@ G:\Study\ASP.net_work\PhoneShop\BusinessLayer\obj\Debug\BusinessLayer.dll
 G:\Study\ASP.net_work\PhoneShop\BusinessLayer\obj\Debug\BusinessLayer.pdb
 G:\Study\ASP.net_work\PhoneShop\BusinessLayer\bin\Debug\ViewModel.dll
 G:\Study\ASP.net_work\PhoneShop\BusinessLayer\bin\Debug\ViewModel.pdb
+G:\Study\ASP.net_work\PhoneShop\BusinessLayer\bin\Debug\Core.dll
+G:\Study\ASP.net_work\PhoneShop\BusinessLayer\bin\Debug\Core.pdb

@@ -47,12 +47,14 @@ namespace PhoneShop.Controllers
             return RedirectToAction("../Home/Index");
         }
 
+        //管理员登录
         [HttpGet]
         public ActionResult Admin()
         {
             return View("Admin");
         }
 
+        //管理员登录权限认证
         [HttpPost]
         public ActionResult Admin(T_Admin admin)
         {

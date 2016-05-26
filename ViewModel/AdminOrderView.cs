@@ -27,7 +27,7 @@ namespace ViewModels
     {
         public static IEnumerable<AdminOrderView> data
         {
-            get;set;
+            get; set;
         }
     }
 }

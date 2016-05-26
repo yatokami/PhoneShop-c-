@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using BusinessEntities;
 using System.Data;
 using System.Data.SqlClient;
+using Core;
 
 namespace DataAccessLayer
 {
     public class OrderDataLayer
     {
+        //商品列表获取
         public List<T_Order> GetOrders(string uname, int v)
         {
             DataTable dt1 = new DataTable();
@@ -27,7 +29,7 @@ namespace DataAccessLayer
                 {
                     OrderStatus = "未接单";
                 }
-                if (uname == null)
+                if (uname == null || uname == "")
                 {
                     dt1 = SqlHelper.ExecuteDataTable("select * from T_Order where OrderStatus = @OrderStatus", new SqlParameter("@OrderStatus", OrderStatus));
                     dt2 = AddColums(dt1);
@@ -41,7 +43,7 @@ namespace DataAccessLayer
             }
             else
             {
-                if (uname == null)
+                if (uname == null || uname == "")
                 {
                     dt1 = SqlHelper.ExecuteDataTable("select * from T_Order");
                     dt2 = AddColums(dt1);
@@ -49,15 +51,16 @@ namespace DataAccessLayer
                 else
                 {
                     uname = "%" + uname + "%";
-                    dt1 = SqlHelper.ExecuteDataTable("select * from T_Order where Uname like @Uname",new SqlParameter("@Uname", uname));
+                    dt1 = SqlHelper.ExecuteDataTable("select * from T_Order where Uname like @Uname", new SqlParameter("@Uname", uname));
                     dt2 = AddColums(dt1);
-                    
+
                 }
             }
             orders = ModelConvertHelper<T_Order>.ConvertToModel(dt2);
             return orders.ToList();
         }
 
+        //添加表格列
         public DataTable AddColums(DataTable dt)
         {
             dt.Columns.Add("Num", Type.GetType("System.Int32"));
@@ -68,6 +71,7 @@ namespace DataAccessLayer
             return dt;
         }
 
+        //更新订单状态
         public int Update_Order(int orderID, int v)
         {
             string status = "";
@@ -75,7 +79,7 @@ namespace DataAccessLayer
             {
                 status = "未接单";
             }
-            else if(v == 2)
+            else if (v == 2)
             {
                 status = "已接单";
             }

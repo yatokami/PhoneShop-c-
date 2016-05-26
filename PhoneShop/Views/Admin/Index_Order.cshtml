@@ -158,8 +158,8 @@
 
                                         @if (Model.AdminOrderViews.HasPrev)
                                         {
-                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Order", "Admin", new { pageIndex = 1 })"><<</a></li>
-                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Order", "Admin", new { pageIndex = Model.AdminOrderViews.PageIndex - 1 })"><</a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Order", "Admin", new { Uname = (string)Model.Uname, pageIndex = 1 })"><<</a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Order", "Admin", new { Uname = (string)Model.Uname, pageIndex = Model.AdminOrderViews.PageIndex - 1 })"><</a></li>
 
                                         }
                                         else
@@ -173,11 +173,11 @@
                                             {
                                                 if (i == Model.AdminOrderViews.PageIndex + 2)
                                                 {
-                                                    <li class="paginate_button previous active"><a href="@Url.Action("Index_Order", "Admin", new { pageIndex = (i - 2) })">@(i - 2)</a></li>
+                                                    <li class="paginate_button previous active"><a href="@Url.Action("Index_Order", "Admin", new { Uname = (string)Model.Uname, pageIndex = (i - 2) })">@(i - 2)</a></li>
                                                 }
                                                 else
                                                 {
-                                                    <li class="paginate_button previous"><a href="@Url.Action("Index_Order", "Admin", new { pageIndex = (i - 2) })">@(i - 2)</a></li>
+                                                    <li class="paginate_button previous"><a href="@Url.Action("Index_Order", "Admin", new { Uname = (string)Model.Uname, pageIndex = (i - 2) })">@(i - 2)</a></li>
                                                 }
                                             }
                                             else if (i == Model.AdminOrderViews.PageIndex + 6)
@@ -189,8 +189,8 @@
                                         @if (Model.AdminOrderViews.HasNext)
                                         {
 
-                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Order", "Admin", new { pageIndex = Model.AdminOrderViews.PageIndex + 1 })">></a></li>
-                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Order", "Admin", new { pageIndex = Model.AdminOrderViews.PageCount })">>></a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Order", "Admin", new { Uname = (string)Model.Uname, pageIndex = Model.AdminOrderViews.PageIndex + 1 })">></a></li>
+                                            <li class="paginate_button previous"><a href="@Url.Action("Index_Order", "Admin", new { Uname = (string)Model.Uname, pageIndex = Model.AdminOrderViews.PageCount })">>></a></li>
                                         }
                                         else
                                         {

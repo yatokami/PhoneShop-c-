@@ -5,7 +5,6 @@ namespace ViewModels
 {
     public class CartView
     {
-        string pic;
         public int GoodsID { get; set; }
         public int BuyID { get; set; }
         public int TypeID { get; set; }

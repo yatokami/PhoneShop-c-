@@ -45,3 +45,5 @@ G:\Study\ASP.net_work\PhoneShop\PhoneShop\bin\System.Web.Http.WebHost.dll
 G:\Study\ASP.net_work\PhoneShop\PhoneShop\bin\System.Net.Http.Formatting.xml
 G:\Study\ASP.net_work\PhoneShop\PhoneShop\bin\System.Web.Http.xml
 G:\Study\ASP.net_work\PhoneShop\PhoneShop\bin\System.Web.Http.WebHost.xml
+G:\Study\ASP.net_work\PhoneShop\PhoneShop\bin\Core.dll
+G:\Study\ASP.net_work\PhoneShop\PhoneShop\bin\Core.pdb

@@ -50,6 +50,10 @@
       <Project>{8b6cdf15-bbd0-4f0f-96e5-49c214f1cd1b}</Project>
       <Name>BusinessEntities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{ab2d322e-d894-4c73-9b50-a1ae6ffa5f0d}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
       <Project>{bdbc4c36-ea0f-4485-956d-08ea19239307}</Project>
       <Name>DataAccessLayer</Name>

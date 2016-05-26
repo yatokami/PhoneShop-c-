@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using Core;
 
 namespace DataAccessLayer
 {
@@ -283,11 +284,37 @@ namespace DataAccessLayer
             return count;
         }
 
+        //删除评论
+        public bool Delete_Comment(int commentID)
+        {
+            int count = SqlHelper.ExecuteNonQuery("delete from T_Comment where CommentID = @CommentID", new SqlParameter("@CommentID", commentID));
+
+            return Convert.ToBoolean(count);
+        }
+
+        //获取评论列表
+        public List<T_Comment> GetComments(string goodsID)
+        {
+            DataTable dt = null;
+            if (goodsID == null || goodsID == "")
+            {
+                dt = SqlHelper.ExecuteDataTable("select * from T_Comment");
+            }
+            else
+            {
+                int GoodsID = Convert.ToInt32(goodsID);
+                dt = SqlHelper.ExecuteDataTable("select * from T_Comment where GoodsID = @GoodsID", new SqlParameter("@GoodsId", GoodsID));
+            }
+            IList<T_Comment> coments = ModelConvertHelper<T_Comment>.ConvertToModel(dt);
+
+            return coments.ToList();
+        }
+
         //手机信息查看
         public List<T_Goods> GetGoods(string GoodsName)
         {
             DataTable dt = null;
-            if (GoodsName == null)
+            if (GoodsName == null || GoodsName == "")
             {
                 dt = SqlHelper.ExecuteDataTable("select * from T_Goods");
 
