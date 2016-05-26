@@ -343,7 +343,7 @@ namespace DataAccessLayer
             }
             catch
             {
-                return null;
+                return 0;
             }
         }
 
@@ -464,7 +464,7 @@ namespace DataAccessLayer
             {
                 return 0;
             }
-            
+
         }
         //删除手机
         public int Delete_Goods(T_Goods good)

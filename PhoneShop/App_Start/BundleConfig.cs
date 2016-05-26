@@ -34,6 +34,12 @@ namespace PhoneShop
             bundles.Add(new ScriptBundle("~/bundles/js.demo").Include(
                  "~/Public/dist/js/demo.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jquery/validate").Include(
+                 "~/Scripts/jquery.validate.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jquery/validate/unobtrusive").Include(
+                 "~/Scripts/jquery.validate.unobtrusive.js"));
+
             bundles.Add(new StyleBundle("~/bundles/bootcss").Include("~/Public/bootstrap/css/bootstrap.min.css"));
 
             bundles.Add(new StyleBundle("~/bundles/font-awesome").Include("~/Content/css/font-awesome.min.css"));

@@ -21,20 +21,28 @@ namespace PhoneShop.Controllers
         [HttpPost]
         public ActionResult Login(T_Users user)
         {
-            AuthBusinessLayer abl = new AuthBusinessLayer();
-            int Uid = abl.IsValidUser(user);
-            if (Uid != 0)
+            if (ModelState.IsValid)
             {
-                //用户认证方法
-                FormsAuthentication.SetAuthCookie(user.Uname, true);
-                HttpCookie cookie = new HttpCookie("Uid");
-                cookie.Value = Convert.ToString(Uid);
-                Response.Cookies.Add(cookie);
-                return RedirectToAction("../Home/Index");
+                AuthBusinessLayer abl = new AuthBusinessLayer();
+                int Uid = abl.IsValidUser(user);
+                if (Uid != 0)
+                {
+                    //用户认证方法
+                    FormsAuthentication.SetAuthCookie(user.Uname, true);
+                    HttpCookie cookie = new HttpCookie("Uid");
+                    cookie.Value = Convert.ToString(Uid);
+                    Response.Cookies.Add(cookie);
+                    return RedirectToAction("../Home/Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("LoginError", "无效用户名或密码");
+                    return View("Login");
+                }
             }
             else
             {
-                return Content("<script>alert('登录失败');location.reload()</script>");
+                return View("Login");
             }
 
         }
