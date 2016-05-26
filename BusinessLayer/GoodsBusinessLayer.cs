@@ -411,5 +411,21 @@ namespace ViewModels
             return status;
         }
         #endregion
+
+        #region 添加商城公告
+        public string Add_Bulletin(T_Bulletin bulletin)
+        {
+            GoodsDataLayer gdl = new GoodsDataLayer();
+            int status = gdl.Add_Bulletin(bulletin);
+            if (status == 1)
+            {
+                return "发布成功";
+            }
+            else
+            {
+                return "发布失败";
+            }
+        }
+        #endregion
     }
 }

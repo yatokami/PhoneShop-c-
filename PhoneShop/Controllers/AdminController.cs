@@ -19,7 +19,6 @@ namespace PhoneShop.Controllers
             AdminListView alv = new AdminListView();
             alv = PageUser(Uname, pageIndex = 1);
 
-
             return View("Index", alv);
         }
         //用户列表显示
@@ -27,7 +26,6 @@ namespace PhoneShop.Controllers
         {
             AdminListView alv = new AdminListView();
             alv = PageUser(Uname, pageIndex = 1);
-
 
             return View("User_Password", alv);
         }
@@ -52,7 +50,7 @@ namespace PhoneShop.Controllers
         }
 
         //密码修改
-        public ActionResult Changepwd(string Uname, string Upwd)
+        public JsonResult Changepwd(string Uname, string Upwd)
         {
             AdminBusinessLayer abl = new AdminBusinessLayer();
 
@@ -75,7 +73,7 @@ namespace PhoneShop.Controllers
             return View(alv);
         }
 
-        //添加未有型号新商品
+        //添加型号新商品
         [HttpPost]
         public ActionResult Add_Goods(T_Goods goods, HttpPostedFileBase GoodsPicture, string BtnSubmit)
         {
@@ -118,7 +116,7 @@ namespace PhoneShop.Controllers
             return RedirectToAction("Add_Goods");
         }
 
-        //上传图片文件
+        //上传商品图片文件
         public string UploadPicture1(T_Goods goods, HttpPostedFileBase GoodsPicture)
         {
             string FileExt = "";     //檢查扩展名
@@ -148,7 +146,7 @@ namespace PhoneShop.Controllers
             return "1";
         }
 
-        //上传图片文件
+        //上传商品图片文件
         public string[] UploadPicture2(T_Goods goods, HttpPostedFileBase GoodsPicture)
         {
             string FileExt = "";     //檢查扩展名
@@ -200,7 +198,7 @@ namespace PhoneShop.Controllers
 
         //更新商品
         [HttpPost]
-        public ActionResult Update_Goods(T_Goods good)
+        public JsonResult Update_Goods(T_Goods good)
         {
             GoodsBusinessLayer abl = new GoodsBusinessLayer();
             bool status = abl.Update_Goods(good);
@@ -227,7 +225,7 @@ namespace PhoneShop.Controllers
 
         //删除商品
         [HttpPost]
-        public ActionResult Delete_Goods(T_Goods good)
+        public JsonResult Delete_Goods(T_Goods good)
         {
             GoodsBusinessLayer abl = new GoodsBusinessLayer();
             bool status = abl.Delete_Goods(good);
@@ -271,7 +269,7 @@ namespace PhoneShop.Controllers
 
         //取消订单
         [HttpPost]
-        public ActionResult Cancel_Order(int OrderID)
+        public JsonResult Cancel_Order(int OrderID)
         {
             GoodsBusinessLayer abl = new GoodsBusinessLayer();
             bool status = abl.Cancel_Order(OrderID, 1);
@@ -281,7 +279,7 @@ namespace PhoneShop.Controllers
 
         //接受订单
         [HttpPost]
-        public ActionResult Upass_Order(int OrderID)
+        public JsonResult Upass_Order(int OrderID)
         {
             GoodsBusinessLayer abl = new GoodsBusinessLayer();
             bool status = abl.Upass_Order(OrderID, 2);
@@ -342,5 +340,68 @@ namespace PhoneShop.Controllers
 
             return Json(status);
         }
+
+        //显示添加公告页面
+        [HttpGet]
+        public ActionResult Add_Bulletin()
+        {
+            AdminListView alv = new AdminListView();
+            alv.AdminUser = User.Identity.Name;
+            return View(alv);
+        }
+
+        //添加公告
+        [HttpPost]
+        public ActionResult Add_Bulletin(T_Bulletin bulletin, HttpPostedFileBase BulletiImg)
+        {
+            GoodsBusinessLayer gbl = new GoodsBusinessLayer();
+            string status = "";
+            string filename = UploadPicture3(bulletin, BulletiImg);
+            if (filename != "1" && filename != "2" && filename != "3")
+            {
+                bulletin.BulletinImg = filename;
+                status = gbl.Add_Bulletin(bulletin);
+             
+                return Content("<script>alert('" + status + "');location.href = 'Add_Bulletin'</script>");
+            }
+            else
+            {
+                return Content("<script>alert('发布失败');location.href='Add_Bulletin';</script>");
+            }
+
+        }
+
+        //上传公告图片
+        public string UploadPicture3(T_Bulletin bulletin, HttpPostedFileBase BulletiImg)
+        {
+            string FileExt = "";     //檢查扩展名
+            int intFileSize = 0;     //檢查大小(KB)
+
+            if (BulletiImg != null)
+            {
+                intFileSize = (BulletiImg.ContentLength / 1024);
+                if (BulletiImg.InputStream.Length != 0)
+                {
+                    if (BulletiImg.InputStream.Length < 3048576)
+                    {
+                        FileExt = Path.GetFileNameWithoutExtension(BulletiImg.FileName);
+                        FileExt = Path.GetExtension(BulletiImg.FileName);
+                        if (FileExt.Equals(".jpg") || FileExt.Equals(".jpeg") || FileExt.Equals(".png") || FileExt.Equals(".gif") || FileExt.Equals(".bmp"))
+                        {
+                            string filename = Path.GetExtension(BulletiImg.FileName);
+                            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                            string ds = Convert.ToInt64(ts.TotalSeconds).ToString();
+                            filename = ds + filename;
+                            BulletiImg.SaveAs(Server.MapPath("~/Content/img/Bulletin/" + filename));//save file 
+                            return filename;
+                        }
+                    }
+                    return "3";
+                }
+                return "2";
+            }
+            return "1";
+        }
+
     }
 }

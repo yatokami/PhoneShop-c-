@@ -292,6 +292,13 @@ namespace DataAccessLayer
             return Convert.ToBoolean(count);
         }
 
+        //添加公告
+        public int Add_Bulletin(T_Bulletin bulletin)
+        {
+            int count = SqlHelper.ExecuteNonQuery("insert into T_Bulletin(BulletinTitle, BulletinContent, BulletinStarTime, BulletinImg)Values(@BulletinTitle, @BulletinContent, getdate(), @BulletinImg)",new SqlParameter("@BulletinTitle", bulletin.BulletinTitle), new SqlParameter("@BulletinContent", bulletin.BulletinContent), new SqlParameter("@BulletinImg", bulletin.BulletinImg));
+            return count;
+        }
+
         //获取评论列表
         public List<T_Comment> GetComments(string goodsID)
         {
