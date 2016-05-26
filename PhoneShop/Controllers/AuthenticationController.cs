@@ -34,7 +34,7 @@ namespace PhoneShop.Controllers
             }
             else
             {
-                return View("Login");
+                return Content("<script>alert('登录失败');location.reload()</script>");
             }
 
         }
