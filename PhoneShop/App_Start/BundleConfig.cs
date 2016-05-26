@@ -8,24 +8,45 @@ namespace PhoneShop
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Public/plugins/jQuery/jQuery-2.1.4.min.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+            bundles.Add(new ScriptBundle("~/bundles/bootjs").Include(
+                         "~/Public/bootstrap/js/bootstrap.min.js"));
 
-            // 使用要用于开发和学习的 Modernizr 的开发版本。然后，当你做好
-            // 生产准备时，请使用 http://modernizr.com 上的生成工具来仅选择所需的测试。
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+            bundles.Add(new ScriptBundle("~/bundles/appjs").Include(
+                        "~/Public/dist/js/app.min.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+            bundles.Add(new ScriptBundle("~/bundles/icheck").Include(
+                 "~/Public/plugins/iCheck/icheck.min.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery/dataTables").Include(
+                 "~/Public/plugins/datatables/jquery.dataTables.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/dataTables/bootstrap").Include(
+                 "~/Public/plugins/datatables/dataTables.bootstrap.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jquery/slimscroll").Include(
+                "~/Public/plugins/slimScroll/jquery.slimscroll.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/fastclick").Include(
+                 "~/Public/plugins/fastclick/fastclick.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js.demo").Include(
+                 "~/Public/dist/js/demo.js"));
+
+            bundles.Add(new StyleBundle("~/bundles/bootcss").Include("~/Public/bootstrap/css/bootstrap.min.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/font-awesome").Include("~/Content/css/font-awesome.min.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/ionicons").Include("~/Content/css/ionicons.min.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/AdminLTE").Include("~/Public/dist/css/AdminLTE.min.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/skin-blue").Include("~/Public/dist/css/skins/skin-blue.min.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/blue").Include("~/Public/plugins/iCheck/square/blue.css"));
+
+            BundleTable.EnableOptimizations = true;
         }
     }
 }

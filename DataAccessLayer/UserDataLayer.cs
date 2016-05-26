@@ -1,10 +1,10 @@
 ﻿using BusinessEntities;
+using Core;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using Core;
 
 namespace DataAccessLayer
 {

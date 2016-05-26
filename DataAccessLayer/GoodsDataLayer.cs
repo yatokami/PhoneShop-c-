@@ -1,11 +1,11 @@
 ﻿using BusinessEntities;
+using Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using Core;
 
 namespace DataAccessLayer
 {
@@ -295,7 +295,7 @@ namespace DataAccessLayer
         //添加公告
         public int Add_Bulletin(T_Bulletin bulletin)
         {
-            int count = SqlHelper.ExecuteNonQuery("insert into T_Bulletin(BulletinTitle, BulletinContent, BulletinStarTime, BulletinImg)Values(@BulletinTitle, @BulletinContent, getdate(), @BulletinImg)",new SqlParameter("@BulletinTitle", bulletin.BulletinTitle), new SqlParameter("@BulletinContent", bulletin.BulletinContent), new SqlParameter("@BulletinImg", bulletin.BulletinImg));
+            int count = SqlHelper.ExecuteNonQuery("insert into T_Bulletin(BulletinTitle, BulletinContent, BulletinStarTime, BulletinImg)Values(@BulletinTitle, @BulletinContent, getdate(), @BulletinImg)", new SqlParameter("@BulletinTitle", bulletin.BulletinTitle), new SqlParameter("@BulletinContent", bulletin.BulletinContent), new SqlParameter("@BulletinImg", bulletin.BulletinImg));
             return count;
         }
 
