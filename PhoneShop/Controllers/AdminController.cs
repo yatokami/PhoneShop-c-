@@ -1,5 +1,6 @@
 ﻿using BusinessEntities;
 using BusinessLayer;
+using PhoneShop.Filter;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +11,7 @@ using ViewModels;
 namespace PhoneShop.Controllers
 {
 
-    //[AdminFilter]
+    [AdminFilter]
     public class AdminController : Controller
     {
         //用户列表查询
@@ -30,6 +31,7 @@ namespace PhoneShop.Controllers
             return View("User_Password", alv);
         }
 
+        //用户列表分页
         public AdminListView PageUser(string Uname, int pageIndex = 1)
         {
             AdminListView alv = new AdminListView();
@@ -43,7 +45,7 @@ namespace PhoneShop.Controllers
             StudentPaging.PageIndex = pageIndex;//指定当前页
 
             alv.Users = StudentPaging;
-            alv.AdminUser = User.Identity.Name;
+            alv.AdminUser = (string)Session["AdminName"];
             alv.Uname = Uname;
 
             return alv;
@@ -69,7 +71,7 @@ namespace PhoneShop.Controllers
             List<GoodsTypeView> lgv = gbl.GetGoodType();
 
             alv.GoodsType = lgv;
-            alv.AdminUser = User.Identity.Name;
+             alv.AdminUser = (string)Session["AdminName"];
             return View(alv);
         }
 
@@ -244,7 +246,7 @@ namespace PhoneShop.Controllers
             PageList<GoodsView> StudentPaging = new PageList<GoodsView>(10, GoodsViews.data);//初始化分页器
             StudentPaging.PageIndex = pageIndex;//指定当前页
             alv.GoodsView = StudentPaging;
-            alv.AdminUser = User.Identity.Name;
+             alv.AdminUser = (string)Session["AdminName"];
             alv.GoodsName = GoodsName;
             return alv;
         }
@@ -307,7 +309,7 @@ namespace PhoneShop.Controllers
             PageList<AdminOrderView> StudentPaging = new PageList<AdminOrderView>(10, AdminOrderViews.data);//初始化分页器
             StudentPaging.PageIndex = pageIndex;//指定当前页
             alv.AdminOrderViews = StudentPaging;
-            alv.AdminUser = User.Identity.Name;
+             alv.AdminUser = (string)Session["AdminName"];
             alv.Uname = Uname;
 
             return alv;
@@ -325,7 +327,7 @@ namespace PhoneShop.Controllers
             PageList<CommentView> StudentPaging = new PageList<CommentView>(10, CommentViews.data);
             StudentPaging.PageIndex = pageIndex;//指定当前页
             alv.CommentViews = StudentPaging;
-            alv.AdminUser = User.Identity.Name;
+             alv.AdminUser = (string)Session["AdminName"];
             alv.GoodsID = GoodsID;
 
             return View(alv);
@@ -346,7 +348,7 @@ namespace PhoneShop.Controllers
         public ActionResult Add_Bulletin()
         {
             AdminListView alv = new AdminListView();
-            alv.AdminUser = User.Identity.Name;
+            alv.AdminUser = (string)Session["AdminName"];
             return View(alv);
         }
 
