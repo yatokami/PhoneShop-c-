@@ -36,20 +36,19 @@
                         <div class="panel-title" style="text-align: left">用户注册</div>
                     </div>
                     <div class="panel-body">
-                        @Html.ValidationMessage("InsertError", new { @class = "alert-danger" })
+                        @Html.ValidationMessage("RegisterError", new { @class = "alert-danger" })
                         @using (Html.BeginForm("Insert", "User", FormMethod.Post, new { @class = "form-horizontal" }))
                         { 
                           <div class="form-group">
-                                <label>用户名</label>
+                                <label>用户名（字母开头长度6-12）</label>
                               @Html.TextBoxFor(x => x.Uname, new { @class = "form-control", @placeholder = "用户名", @required = true })
                               @Html.ValidationMessageFor(x => x.Uname, null, new { @class = "alert-danger" })
                                 @*<input id="Uname" type="text" class="form-control" name="Uname" placeholder="用户名" required />*@
                             </div>
                             <div class="form-group">
-                                <label>密码</label>
+                                <label>密码（长度为6-12）</label>
                                 @Html.TextBoxFor(x => x.Upwd, new { @class = "form-control", @placeholder = "密码", @required = true , @type = "password"})
                                 @Html.ValidationMessageFor(x => x.Upwd, null, new { @class = "alert-danger" })
-                                @*<input id="Upwd" type="password" class="form-control" name="Upwd" placeholder="密码" required />*@
                             </div>
                             <div class="form-group">
                                 <label>性别 </label>
@@ -58,30 +57,31 @@
                                 @Html.RadioButtonFor(x => x.Sex, "女", new { @class = "iradio_minimal" })
                                 女
                                 @Html.RadioButtonFor(x => x.Sex, "秀吉", new { @class = "iradio_minimal" })
-                                秀吉
-                                @*<input id="Usex" type="radio" class="iradio_minimal" name="Sex" value="男" checked />男
-                                <input id="Usex" type="radio" class="iradio_minimal" name="Sex" value="女" />女
-                                <input id="Usex" type="radio" class="iradio_minimal" name="Sex" value="秀吉" />秀吉*@
+                                秀吉  
                             </div>
                             <div class="form-group">
                                 <label>真实姓名</label>
                                 @Html.TextBoxFor(x => x.RealName, new { @class = "form-control", @placeholder = "真实姓名", @required = true })
+                                @Html.ValidationMessageFor(x => x.RealName, null, new { @class = "alert-danger" })
                             </div>
                             <div class="form-group">
                                 <label>电话</label>
-                                @Html.TextBoxFor(x => x.Tel, new { @class = "form-control", @placeholder = "联系电话", @required = true })required />
+                                @Html.TextBoxFor(x => x.Tel, new { @class = "form-control", @placeholder = "联系电话", @required = true })
+                                @Html.ValidationMessageFor(x => x.Tel, null, new { @class = "alert-danger" })
                             </div>
                             <div class="form-group">
                                 <label>电子邮件地址</label>
-                                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "Email", @required = true })
+                                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "Email", @required = true })                      @Html.ValidationMessageFor(x => x.Email, null, new { @class = "alert-danger" })
                             </div>
                             <div class="form-group">
                                 <label>送货地址</label>
                                 @Html.TextBoxFor(x => x.Address, new { @class = "form-control", @placeholder = "送货地址", @required = true })
+                                @Html.ValidationMessageFor(x => x.Address, null, new { @class = "alert-danger" })
                             </div>
                             <div class="form-group">
                                 <label>邮编</label>
                               @Html.TextBoxFor(x => x.PostCode, new { @class = "form-control", @placeholder = "邮编", @required = true })
+                                @Html.ValidationMessageFor(x => x.PostCode, null, new { @class = "alert-danger" })
                             </div>
                             <div class="form-group">
                                 <input type="submit" class="btn btn-success btn-block" onclick="register()" value="注 册" />
@@ -93,5 +93,8 @@
             </div>
         </div>
     </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery/validate")
+    @Scripts.Render("~/bundles/jquery/validate/unobtrusive")
 </body>
 </html>

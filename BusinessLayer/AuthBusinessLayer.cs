@@ -6,7 +6,7 @@ namespace ViewModels
     public class AuthBusinessLayer
     {
         #region 用户登录认证
-        public int IsValidUser(T_Users user)
+        public int IsValidUser(T_User user)
         {
             UserDataLayer adl = new UserDataLayer();
             int Uid = adl.IsValidUser(user);

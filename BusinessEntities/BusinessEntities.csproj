@@ -49,8 +49,15 @@
     <Compile Include="T_Goods_Model.cs" />
     <Compile Include="T_OrderDetail_Model.cs" />
     <Compile Include="T_Order_Model.cs" />
+    <Compile Include="T_User.cs" />
     <Compile Include="T_Users_Model.cs" />
     <Compile Include="T_WellBad_Model.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{AB2D322E-D894-4C73-9B50-A1AE6FFA5F0D}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -11,7 +11,7 @@ namespace DataAccessLayer
     public class UserDataLayer
     {
         //用户登录
-        public int IsValidUser(T_Users user)
+        public int IsValidUser(T_User user)
         {
             int count = 0;
             try

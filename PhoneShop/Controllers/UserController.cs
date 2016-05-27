@@ -19,10 +19,18 @@ namespace PhoneShop.Controllers
         [HttpPost]
         public ActionResult Insert(T_Users user)
         {
-            UserBusinessLayer rbl = new UserBusinessLayer();
-            if (rbl.GetRegister(user))
-            {
-                return RedirectToAction("../Authentication/Login");
+            if (ModelState.IsValid)
+            { 
+                UserBusinessLayer rbl = new UserBusinessLayer();
+                if (rbl.GetRegister(user))
+                {
+                    return RedirectToAction("../Authentication/Login");
+                }
+                else
+                {
+                    ModelState.AddModelError("RegisterError", "注册失败");
+                    return View("Index");
+                }
             }
             else
             {

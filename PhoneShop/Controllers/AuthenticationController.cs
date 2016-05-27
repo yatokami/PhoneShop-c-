@@ -19,7 +19,7 @@ namespace PhoneShop.Controllers
 
         //POST:用户登录
         [HttpPost]
-        public ActionResult Login(T_Users user)
+        public ActionResult Login(T_User user)
         {
             if (ModelState.IsValid)
             {
