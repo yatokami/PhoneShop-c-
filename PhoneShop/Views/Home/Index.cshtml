@@ -13,50 +13,70 @@
 }
 
 @section ContentBody{
-  <div class="row">
-    <div class="col-xs-2" id="myScrollspy" style="margin-left:-30px">
-        <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="10">
-            <li><a href="/Home/Index">首页</a></li>
+
+<div class="row row-offcanvas row-offcanvas-right">
+
+    <div class="col-xs-12 col-sm-9">
+        <p class="pull-right visible-xs">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+        </p>
+        <div class="jumbotron" style="background-color:white">
+            <h3>端午大放送</h3>
+            <img class="img-rounded" style="width:700px;height:350px" src="~/Content/img/Bulletin/sabermax.jpg"/>
+        </div>
+        <div class="row">
+        @foreach (var Data in Model.GoodsView.GetPagingData())
+        {
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img src="@Data.GoodsPicture" class="img-rounded" style="height: 200px; width: 100%; display: block;" alt="...">
+                    <div class="caption">
+                        <h4>商品名称:@Data.GoodsName</h4>
+                        <p>单价:@Data.Price</p>
+                        <p><a href="@Url.Action("Show", "Home", new {GoodsID=Data.GoodsID})" class="btn btn-primary" role="button">点击查看详情</a></p>
+                    </div>
+                </div>
+            </div>
+        }
+        </div><!--/row-->
+    </div><!--/.col-xs-12.col-sm-9-->
+
+    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+        <div class="list-group">
+            <a  class="list-group-item" href="/Home/Index">首页</a>
             @foreach (GoodsTypeView gtv in Model.GoodsTypeView)
             {
-                <li><a href="@Url.Action("Index", "Home", new{TypeID=gtv.TypeID})">@gtv.TypeName</a></li>
+                <a class="list-group-item" href="@Url.Action("Index", "Home", new{TypeID=gtv.TypeID})">@gtv.TypeName</a>
             }
-        </ul>
-    </div>
- 
-@foreach (var Data in Model.GoodsView.GetPagingData())
-{
-    <div class="col-xs-6  col-md-4">
-        <div class="thumbnail">
-            <img class="img-rounded" style="height:100px; width:100px" src="@Data.GoodsPicture" />
-            <div class="caption">
-                <h3>商品名称:@Data.GoodsName</h3>
-                <p>单价:@Data.Price</p>
-                <p><a href="@Url.Action("Show", "Home", new {GoodsID=Data.GoodsID})" class="btn btn-primary" role="button">点击查看详情</a></p>
-            </div>
+           
+            <iframe id="tmp_downloadhelper_iframe" style="display: none;"></iframe>
         </div>
-    </div>
-}
+    </div><!--/.sidebar-offcanvas-->
 </div>
- 
-<nav>
+
+@*<div class="btn-group" role="group" aria-label="...">
+    <button type="button" class="btn btn-default">Left</button>
+    <button type="button" class="btn btn-default">Middle</button>
+    <button type="button" class="btn btn-default">Right</button>
+</div>*@
+<div class="btn-group" role="group" aria-label="...">
     <ul class="pager">
-    @if (Model.GoodsView.HasPrev)
-    {
-       <li> <a href="@Url.Action("Index", "Home", new { pageIndex = Model.GoodsView.PageIndex - 1, TypeID = Model.GoodView[0].TypeID })">上一页</a></li>
-    }
-    else
-    {
-        <li> <a style="color:Gray">上一页</a></li>
-    }
-    @if (Model.GoodsView.HasNext)
-    {
-        <li><a href="@Url.Action("Index", "Home", new { pageIndex = Model.GoodsView.PageIndex + 1, TypeID = Model.GoodView[0].TypeID })">下一页</a></li>
-    }
-    else
-    {
-        <li><a style="color:Gray">下一页</a></li>
-    }
+        @if (Model.GoodsView.HasPrev)
+        {
+            <li> <a href="@Url.Action("Index", "Home", new { pageIndex = Model.GoodsView.PageIndex - 1, TypeID = Model.GoodView[0].TypeID })">上一页</a></li>
+        }
+        else
+        {
+            <li> <a style="color:Gray">上一页</a></li>
+        }
+        @if (Model.GoodsView.HasNext)
+        {
+            <li><a href="@Url.Action("Index", "Home", new { pageIndex = Model.GoodsView.PageIndex + 1, TypeID = Model.GoodView[0].TypeID })">下一页</a></li>
+        }
+        else
+        {
+            <li><a style="color:Gray">下一页</a></li>
+        }
     </ul>
-</nav>
-}
+</div>
+    }
