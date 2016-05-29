@@ -7,7 +7,7 @@ namespace ViewModels
         public string picture;
         public int GoodsID { get; set; }
         public string GoodsName { get; set; }
-        public string GoodsPicture { get { return picture + ".jpg"; } set { picture = value; } }
+        public string GoodsPicture { get ;  set ;  }
         public int Num { get; set; }
         public int OrderID { get; set; }
         public int TotalMoney { get; set; }

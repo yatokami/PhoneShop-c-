@@ -145,6 +145,14 @@
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\Bulletin\arrow-next.png" />
+    <Content Include="Content\img\Bulletin\arrow-prev.png" />
+    <Content Include="Content\img\Bulletin\control.png" />
+    <Content Include="Content\img\Bulletin\temp_pic_1.jpg" />
+    <Content Include="Content\img\Bulletin\temp_pic_2.jpg" />
+    <Content Include="Content\img\Bulletin\temp_pic_3.jpg" />
+    <Content Include="Content\img\Bulletin\temp_pic_4.jpg" />
+    <Content Include="Content\img\Bulletin\temp_pic_5.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -1146,6 +1154,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.cxscroll.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1154,7 +1163,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1197,7 +1205,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\img\Bulletin\" />
     <Folder Include="Public\images\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>

@@ -62,15 +62,39 @@
                     </li>
                     }
                 </ul>
+
             </div>
+
             <div style="float: right;height: 35px;width:330px;">
+                <div class="btn-group" role="group" aria-label="...">
+                    <ul class="pager">
+                        @if (Model.CartViews.HasPrev)
+                        {
+                            <li><a href="@Url.Action("Cart", "Home", new { pageIndex = Model.CartViews.PageIndex - 1})">上一页</a></li>
+                        }
+                        else
+                        {
+                            <li><a style="color:Gray">上一页</a></li>
+                        }
+                        @if (Model.CartViews.HasNext)
+                        {
+                            <li><a href="@Url.Action("Cart", "Home", new { pageIndex = Model.CartViews.PageIndex + 1})">下一页</a></li>
+                        }
+                        else
+                        {
+                            <li><a style="color:Gray">下一页</a></li>
+                        }
+                    </ul>
+                </div>
                 总计：<span id="money" style="color: red;font-size: 25px">￥0.00</span>
                 <input type="button" style="width: 130px;float:right;" class="btn btn-success" onclick="Clearing();" value="结 算" />
+            
             </div>
         </div>
     </div>
 </div>
-<nav>
+
+@*<nav>
     <ul class="pager">
         @if (Model.CartViews.HasPrev)
         {
@@ -89,7 +113,7 @@
             <li><a style="color:Gray">下一页</a></li>
         }
     </ul>
-</nav>
+</nav>*@
 }
 
 @section ContentScript{

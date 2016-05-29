@@ -17,7 +17,7 @@ namespace Core
             }
             else
             {
-                Regex re = new Regex(@"^[a-zA-Z][0-9a-zA-Z]{6,12}$");
+                Regex re = new Regex(@"^[a-zA-Z][0-9a-zA-Z]{5,12}$");
                 if (!re.IsMatch(value.ToString()))
                 {
                     return new ValidationResult("用户名格式错误");
