@@ -16,7 +16,7 @@ namespace DataAccessLayer
             int count = 0;
             try
             {
-                count = (int)SqlHelper.ExecuteScalar("select count(*) from T_Users where Uname = @Uname and Upwd = @Upwd", new SqlParameter("@Uname", user.Uname), new SqlParameter("@Upwd", user.Upwd));
+                count = SqlHelper.GetSqlAsInt("select Uid from T_Users where Uname = @Uname and Upwd = @Upwd", new SqlParameter("@Uname", user.Uname), new SqlParameter("@Upwd", user.Upwd));
 
             }
             catch

@@ -2,4 +2,3 @@ G:\Study\ASP.net_work\PhoneShop\Core\bin\Debug\Core.dll
 G:\Study\ASP.net_work\PhoneShop\Core\bin\Debug\Core.pdb
 G:\Study\ASP.net_work\PhoneShop\Core\obj\Debug\Core.dll
 G:\Study\ASP.net_work\PhoneShop\Core\obj\Debug\Core.pdb
-G:\Study\ASP.net_work\PhoneShop\Core\obj\Debug\Core.csprojResolveAssemblyReference.cache

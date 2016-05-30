@@ -24,7 +24,7 @@ namespace PhoneShop.Controllers
                 UserBusinessLayer rbl = new UserBusinessLayer();
                 if (rbl.GetRegister(user))
                 {
-                    return RedirectToAction("../Authentication/Login");
+                    return Content("<script>alert('注册成功');location.href='/Authentication/Login'</script>");
                 }
                 else
                 {
